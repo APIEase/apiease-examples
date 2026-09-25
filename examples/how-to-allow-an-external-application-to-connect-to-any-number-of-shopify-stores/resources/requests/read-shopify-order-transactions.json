@@ -1,5 +1,4 @@
 {
-  "id": "read-shopify-order-transactions",
   "name": "Read Shopify Order Transactions",
   "type": "http",
   "method": "POST",
@@ -19,5 +18,6 @@
       "type": "body",
       "value": "{\"query\":\"query ListOrderTransactions { orders(first: 10) { nodes { id name createdAt transactions(first: 10) { id kind status gateway processedAt amountSet { shopMoney { amount currencyCode } presentmentMoney { amount currencyCode } } } } } }\"}"
     }
-  ]
+  ],
+  "handle": "read-shopify-order-transactions"
 }

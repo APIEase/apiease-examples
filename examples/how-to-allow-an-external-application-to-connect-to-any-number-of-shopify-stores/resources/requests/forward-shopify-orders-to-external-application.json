@@ -1,5 +1,4 @@
 {
-  "id": "forward-shopify-orders-to-external-application",
   "name": "Forward Shopify Orders To External Application",
   "type": "http",
   "method": "POST",
@@ -29,5 +28,6 @@
         "event": "ORDERS_CREATE"
       }
     }
-  ]
+  ],
+  "handle": "forward-shopify-orders-to-external-application"
 }

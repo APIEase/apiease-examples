@@ -1,5 +1,4 @@
 {
-  "id": "send-shopify-order-to-third-party",
   "name": "Send Shopify Order To Third Party",
   "type": "http",
   "method": "POST",
@@ -49,5 +48,6 @@
         "event": "ORDERS_CREATE"
       }
     }
-  ]
+  ],
+  "handle": "send-shopify-order-to-third-party"
 }
