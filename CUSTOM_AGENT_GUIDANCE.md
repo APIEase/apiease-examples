@@ -1,21 +1,26 @@
 # Custom Agent Guidance
 
-Use this file for project-specific instructions you want coding agents to follow.
+This repository contains reusable APIEase examples and a curated examples knowledge base. Keep project-specific guidance here and in `CUSTOM_README.md`; do not change template-owned defaults or the imported product knowledge base for this workflow.
 
-Replace the placeholders below with your own guidance. Keep the content concrete and action-oriented so agents can apply it without guessing.
+## Authoring example READMEs
 
-## Project Goals
-- Describe what you are building with APIEase.
-- Note what success looks like for this project.
+- Give each README one top-level `#` title outside the knowledge base blocks.
+- When generating or updating an example, surround its subject-specific explanation with paired, standalone `<!-- apiease-kb:start -->` and `<!-- apiease-kb:end -->` comments outside fenced code. Multiple blocks are supported and appear in document order. Never nest blocks or leave them empty or unmatched.
+- Include the problem, architecture, resource roles, execution flow, inputs, response shapes, and useful requirements or limitations. Keep necessary scopes, server-side authorization, trigger configuration, and other constraints in the included explanation even if they originally appeared in setup steps or an “Important notes” section.
+- Keep installation walkthroughs, generic reminders, promotional copy, and reference-link collections outside the blocks. Organize the original README for humans; do not duplicate an explanation solely for the knowledge base.
+- Use relative Markdown links normally in prose; the generator resolves them to canonical GitHub URLs. Keep reference-link definitions used by included prose inside included blocks. Code examples are preserved except for the exact development-host normalization described in `CUSTOM_README.md`.
 
-## Preferred Patterns
-- Describe how requests, widgets, and variables should usually be organized.
-- Add naming conventions or folder conventions if you have them.
+## Enrollment and maintenance
 
-## Constraints
-- List anything agents should avoid changing.
-- List required compatibility, environment, or product constraints.
+- `knowledgebase/examples.json` explicitly enrolls examples and individual files in bundle order. Paths to examples are relative to the repository root; file paths are relative to that example. Only `README.md` and selected JSON in configured resource directories are supported. Do not add `answer.md`, `create-resources.sh`, or other files implicitly.
+- README markers curate content; they do not enroll an example. Add a manifest entry only when that example and its files are deliberately selected for the bundle.
+- Never edit `knowledgebase/apiEaseExamplesConsolidated.md` manually. For changes to selected content, selections, markers, or generation logic, rebuild and check it:
 
-## Workflow Notes
-- Note any preferred commands, review expectations, or definition-of-done details.
-- Add links or references to additional docs if needed.
+  ```bash
+  node knowledgebase/buildApiEaseExamplesKnowledgeBase.js
+  node --test test/examples-knowledgebase.test.js
+  node knowledgebase/buildApiEaseExamplesKnowledgeBase.js --check
+  ```
+
+- Generation normalizes only the exact development hostname `store-apiease-admin-local.myshopify.com` to `yourstore.myshopify.com` in emitted content. Preserve source resource files; normalization is not a source migration.
+- Keep implementation within this repository. Importing the bundle into `../apiease` and connecting it to the assistant are separate consumer-integration work.

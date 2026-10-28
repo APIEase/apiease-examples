@@ -1,5 +1,6 @@
 # Lookup Shopify Discount Code Details From A Theme Extension
 
+<!-- apiease-kb:start -->
 This example shows how a Shopify storefront or theme extension can look up discount code details without calling the Shopify Admin API from browser-delivered code.
 
 Theme extensions run in the storefront. Storefront JavaScript and Liquid are inspectable by customers, so they should not contain Shopify Admin API access tokens. This example sends only the discount code from the storefront to APIEase through Shopify App Proxy. APIEase runs the Shopify Admin GraphQL request server-side and returns safe display data.
@@ -18,20 +19,40 @@ Theme Extension -> Shopify App Proxy -> APIEase -> Shopify Admin GraphQL
 - Creates a storefront-facing Liquid request that accepts only the discount code through `liquidParamsEmbedded`.
 - Creates an internal HTTP request that calls Shopify Admin GraphQL `codeDiscountNodeByCode`.
 - Uses APIEase automatic shop access token behavior for the Shopify Admin API request. No Shopify Admin API token, APIEase API key, or private credential appears in the widget code.
-- Returns display-oriented JSON with common fields for basic code discounts and fallback details for other discount code types.
+- Returns display-oriented JSON with common fields and queried details for basic, buy-X-get-Y, and free-shipping code discounts.
 
-## Files
+## Resource roles
 
-- `resources/requests/lookup-shopify-discount-code-admin-graphql.json`: the internal Shopify Admin GraphQL HTTP request.
-- `resources/requests/lookup-shopify-discount-code-details.json`: the storefront-facing Liquid request that shapes the response. Add the Storefront App Proxy trigger to this request in the APIEase admin after creating it.
-- `resources/widgets/lookup-shopify-discount-code-details.json`: the reusable storefront widget.
-- `answer.md`: short community-answer copy that links to this example.
+- [Admin GraphQL request](resources/requests/lookup-shopify-discount-code-admin-graphql.json), handle `lookup-shopify-discount-code-admin-graphql`: the internal HTTP request containing the fixed GraphQL query.
+- [Discount details request](resources/requests/lookup-shopify-discount-code-details.json), handle `lookup-shopify-discount-code-details`: the storefront-facing Liquid request that validates the input and shapes the response.
+- [Discount details widget](resources/widgets/lookup-shopify-discount-code-details.json), handle `lookup-shopify-discount-code-details`: the reusable storefront UI.
+
+## Execution flow and inputs
+
+1. The widget trims the entered discount code and rejects an empty input.
+2. It calls `apiease.runRequest('lookup-shopify-discount-code-details', { liquidParamsEmbedded: { code: code } })`. The widget helper supplies the runtime input through Shopify App Proxy; the Liquid request reads it from `apiEaseParameters.liquidParams.code`.
+3. The Liquid request also checks for a missing or empty code. For a nonempty code, it calls `lookup-shopify-discount-code-admin-graphql`, passing the code in `bodyEmbedded.variables.code`.
+4. The internal HTTP request posts its fixed `codeDiscountNodeByCode(code: $code)` query to the shop's Admin GraphQL endpoint. APIEase supplies the shop access token on the server.
+5. The Liquid request handles HTTP failures, GraphQL errors, and a missing discount, or returns display fields for the matching discount.
+6. The widget reads the returned data, parsing it if it is a JSON string, and renders the result or error message.
+
+## Requirements and limitations
+
+- Use Shopify Admin GraphQL for discount definition lookup. The input is a discount code string, not a discount node ID.
+- The shop access token requires `read_discounts`. Product and collection display fields may also require the related Shopify Admin API read access.
+- The Admin API endpoint must match the installed shop domain for APIEase's automatic shop access token injection. Authorization stays server-side. If an explicit `X-Shopify-Access-Token` override is needed, store it as a sensitive APIEase request parameter; never deliver it in theme code or widget JavaScript.
+- Configure the Storefront App Proxy trigger separately in APIEase admin on the storefront-facing Liquid request. The public resource create API rejects that trigger in request payloads, so omit any exported `storefrontAppProxy` trigger when creating or updating through that API. The internal HTTP request has no storefront trigger.
+- App Proxy calls are publicly callable through Shopify's proxy. Only return discount information that is appropriate for storefront visitors; the response includes the queried discount details.
+- This retrieves discount definitions; it does not prove that a code applies to a particular customer, product, or cart. The query has fields for basic, buy-X-get-Y, and free-shipping code discounts; other types need additional query and response handling.
+- Product and collection lists are limited to the first 10 entries in the query and are not paginated. The example does not enumerate all discounts or look up automatic discounts.
+<!-- apiease-kb:end -->
+
+The companion `answer.md` contains short community-answer copy that links to this example.
 
 ## Beginner-friendly steps
 
 1. Choose the shop domain where APIEase is installed. The setup script below injects that shop domain into a temporary copy of `lookup-shopify-discount-code-admin-graphql.json`; if you use the manual commands, replace `your-store.myshopify.com` in that file before creating the Admin GraphQL request.
-2. Confirm APIEase has the Shopify Admin API `read_discounts` scope for that shop.
-   This example also requests product and collection display fields when a discount targets them, so confirm the shop token has the related read access if Shopify enforces it for your selected fields.
+2. Confirm the shop permissions and request configuration described in [Requirements and limitations](#requirements-and-limitations).
 3. Create the internal Admin GraphQL request:
 
 ```bash
@@ -60,10 +81,9 @@ APIEASE_SHOP_DOMAIN=your-store.myshopify.com examples/shopify/discount-codes/det
 7. Add the APIEase app block to the desired theme template or page and set the widget handle to `lookup-shopify-discount-code-details`.
 8. Test with an existing discount code.
 
-The current public resource API rejects Storefront App Proxy triggers in request create payloads. Create or update the Liquid request from this source file, then add the Storefront App Proxy trigger in APIEase admin.
+Before using the script or manual commands, check the source files against [Requirements and limitations](#requirements-and-limitations): use your installed shop domain and omit any exported App Proxy trigger from the create payload, then configure that trigger in APIEase admin.
 
-If you use the manual commands instead of the script, replace `your-store.myshopify.com` in the Admin GraphQL request file before creating it. The Shopify Admin API address must match the installed shop domain so APIEase can inject the correct shop access token.
-
+<!-- apiease-kb:start -->
 ## Why this is safe
 
 The browser only sends:
@@ -92,11 +112,14 @@ Successful lookup responses are shaped like:
   "usageCount": 3,
   "valueSummary": "10% off selected products",
   "minimumRequirement": "None",
+  "appliesToAllItems": false,
   "eligibleProducts": [],
   "eligibleCollections": [],
   "rawType": "DiscountCodeBasic"
 }
 ```
+
+The success example shows the common display fields. The response also includes `details`, the queried `codeDiscount` object. Each eligible product has `id`, `title`, `handle`, and `url`; each eligible collection has `id`, `title`, and `handle`.
 
 Not-found responses are shaped like:
 
@@ -114,9 +137,14 @@ Error responses are shaped like:
 ```json
 {
   "ok": false,
+  "found": false,
+  "code": "SAVE10",
   "message": "Unable to lookup discount code."
 }
 ```
+
+An empty input returns `ok: false`, `found: false`, and `message: "Enter a discount code."` without a `code` field. A GraphQL failure uses a Shopify-specific error message and also includes an `errors` array.
+<!-- apiease-kb:end -->
 
 ## When to extend this example
 
@@ -130,15 +158,6 @@ Use this as the root pattern for related discount-code examples:
 - Show discounts available to a logged-in customer.
 - Show automatic discounts.
 - Build promotion finder widgets.
-
-## Important notes
-
-- Use Shopify Admin GraphQL for discount definition lookup, not Storefront GraphQL.
-- `codeDiscountNodeByCode(code: $code)` is the right lookup when the storefront input is a discount code string.
-- The Shopify Admin API request requires the `read_discounts` access scope.
-- Product and collection display fields may require the related Shopify Admin API read access in addition to `read_discounts`.
-- Do not put `X-Shopify-Access-Token` in theme code, widget JavaScript, or any browser-delivered Liquid.
-- If you use an explicit `X-Shopify-Access-Token` header for a local demo, store it as a sensitive APIEase request parameter. Do not place it in the widget.
 
 ## Official links
 

@@ -1,0 +1,13 @@
+{
+  "examples": [
+    {
+      "path": "examples/shopify/discount-codes/details",
+      "files": [
+        "README.md",
+        "resources/requests/lookup-shopify-discount-code-admin-graphql.json",
+        "resources/requests/lookup-shopify-discount-code-details.json",
+        "resources/widgets/lookup-shopify-discount-code-details.json"
+      ]
+    }
+  ]
+}
