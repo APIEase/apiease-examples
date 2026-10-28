@@ -1,26 +1,30 @@
 {
-  "name": "Lookup Shopify Discount Code Admin GraphQL",
-  "type": "http",
+  "address": "https://store-apiease-admin-local.myshopify.com/admin/api/2026-10/graphql.json",
+  "contractVersion": 1,
+  "formatVersion": 1,
+  "handle": "lookup-shopify-discount-code-admin-graphql",
   "method": "POST",
-  "address": "https://your-store.myshopify.com/admin/api/2026-04/graphql.json",
+  "name": "Lookup Shopify Discount Code Admin GraphQL",
   "parameters": [
     {
-      "type": "header",
       "name": "Accept",
-      "value": "application/json",
-      "sensitive": false
-    },
-    {
+      "sensitive": false,
       "type": "header",
-      "name": "Content-Type",
-      "value": "application/json",
-      "sensitive": false
+      "value": "application/json"
     },
     {
+      "name": "Content-Type",
+      "sensitive": false,
+      "type": "header",
+      "value": "application/json"
+    },
+    {
+      "sensitive": false,
       "type": "body",
-      "value": "{\"query\":\"query DiscountCodeLookup($code: String!) { codeDiscountNodeByCode(code: $code) { id codeDiscount { __typename ... on DiscountCodeBasic { title status startsAt endsAt usageLimit asyncUsageCount shortSummary summary codes(first: 10) { nodes { code } } customerGets { value { __typename ... on DiscountPercentage { percentage } ... on DiscountAmount { amount { amount currencyCode } appliesOnEachItem } } items { __typename ... on DiscountProducts { products(first: 10) { nodes { id title handle onlineStoreUrl } } } ... on DiscountCollections { collections(first: 10) { nodes { id title handle } } } ... on AllDiscountItems { allItems } } } minimumRequirement { __typename ... on DiscountMinimumSubtotal { greaterThanOrEqualToSubtotal { amount currencyCode } } ... on DiscountMinimumQuantity { greaterThanOrEqualToQuantity } } } ... on DiscountCodeBxgy { title status startsAt endsAt usageLimit asyncUsageCount summary codes(first: 10) { nodes { code } } customerGets { value { __typename ... on DiscountPercentage { percentage } ... on DiscountAmount { amount { amount currencyCode } appliesOnEachItem } } items { __typename ... on DiscountProducts { products(first: 10) { nodes { id title handle onlineStoreUrl } } } ... on DiscountCollections { collections(first: 10) { nodes { id title handle } } } ... on AllDiscountItems { allItems } } } } ... on DiscountCodeFreeShipping { title status startsAt endsAt usageLimit asyncUsageCount shortSummary summary codes(first: 10) { nodes { code } } minimumRequirement { __typename ... on DiscountMinimumSubtotal { greaterThanOrEqualToSubtotal { amount currencyCode } } ... on DiscountMinimumQuantity { greaterThanOrEqualToQuantity } } } } } }\",\"variables\":{\"code\":\"\"}}",
-      "sensitive": false
+      "value": "{\"query\":\"query DiscountCodeLookup($code: String!) { codeDiscountNodeByCode(code: $code) { id codeDiscount { __typename ... on DiscountCodeBasic { title status startsAt endsAt usageLimit asyncUsageCount shortSummary summary codes(first: 10) { nodes { code } } customerGets { value { __typename ... on DiscountPercentage { percentage } ... on DiscountAmount { amount { amount currencyCode } appliesOnEachItem } } items { __typename ... on DiscountProducts { products(first: 10) { nodes { id title handle onlineStoreUrl } } } ... on DiscountCollections { collections(first: 10) { nodes { id title handle } } } ... on AllDiscountItems { allItems } } } minimumRequirement { __typename ... on DiscountMinimumSubtotal { greaterThanOrEqualToSubtotal { amount currencyCode } } ... on DiscountMinimumQuantity { greaterThanOrEqualToQuantity } } } ... on DiscountCodeBxgy { title status startsAt endsAt usageLimit asyncUsageCount summary codes(first: 10) { nodes { code } } customerGets { value { __typename ... on DiscountPercentage { percentage } ... on DiscountAmount { amount { amount currencyCode } appliesOnEachItem } } items { __typename ... on DiscountProducts { products(first: 10) { nodes { id title handle onlineStoreUrl } } } ... on DiscountCollections { collections(first: 10) { nodes { id title handle } } } ... on AllDiscountItems { allItems } } } } ... on DiscountCodeFreeShipping { title status startsAt endsAt usageLimit asyncUsageCount shortSummary summary codes(first: 10) { nodes { code } } minimumRequirement { __typename ... on DiscountMinimumSubtotal { greaterThanOrEqualToSubtotal { amount currencyCode } } ... on DiscountMinimumQuantity { greaterThanOrEqualToQuantity } } } } } }\",\"variables\":{\"code\":\"\"}}"
     }
   ],
-  "handle": "lookup-shopify-discount-code-admin-graphql"
+  "resourceType": "request",
+  "triggers": [],
+  "type": "http"
 }
