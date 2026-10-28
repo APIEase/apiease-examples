@@ -7,11 +7,11 @@ const {promisify} = require('node:util');
 const {test} = require('node:test');
 const {
   SOURCE_ROOT, buildKnowledgeBase, generateKnowledgeBaseText, extractReadme, canonicalizeLinks,
-} = require('../knowledgebase/buildApiEaseExamplesKnowledgeBase');
+} = require('../scripts/knowledgebase/buildApiEaseExamplesKnowledgeBase');
 
 const run = promisify(execFile);
 const repoRoot = path.resolve(__dirname, '..');
-const builder = path.join(repoRoot, 'knowledgebase/buildApiEaseExamplesKnowledgeBase.js');
+const builder = path.join(repoRoot, 'scripts/knowledgebase/buildApiEaseExamplesKnowledgeBase.js');
 const start = '<!-- apiease-kb:start -->';
 const end = '<!-- apiease-kb:end -->';
 const hostname = 'store-apiease-admin-local.myshopify.com';
@@ -28,11 +28,12 @@ async function fixture(t) {
     await fs.writeFile(file, text);
   }
   async function manifest(entries = [{path: example, files: ['README.md', requestFile, widgetFile]}]) {
-    await write('knowledgebase/examples.json', JSON.stringify({examples: entries}));
+    await write('docs/knowledgebase/examples.json', JSON.stringify({examples: entries}));
   }
   await fs.copyFile(path.join(repoRoot, 'apiease.config.js'), path.join(root, 'apiease.config.js'));
   await manifest();
-  await fs.copyFile(builder, path.join(root, 'knowledgebase/buildApiEaseExamplesKnowledgeBase.js'));
+  await fs.mkdir(path.join(root, 'scripts/knowledgebase'), {recursive: true});
+  await fs.copyFile(builder, path.join(root, 'scripts/knowledgebase/buildApiEaseExamplesKnowledgeBase.js'));
   await write(`${example}/README.md`, [
     '# Fixture title', 'Excluded introduction.', start,
     '## First block', `Visit https://${hostname}/admin/api/2026-10/graphql.json?q=1#result`,
@@ -55,7 +56,7 @@ async function fixture(t) {
   await write(`${example}/answer.md`, 'Excluded community answer.');
   await write(`${example}/create-resources.sh`, 'Excluded installer.');
   await write('examples/unselected/README.md', `# Never selected\n${start}\nHidden example\n${end}`);
-  return {root, write, manifest, output: path.join(root, 'knowledgebase/apiEaseExamplesConsolidated.md')};
+  return {root, write, manifest, output: path.join(root, 'docs/knowledgebase/apiEaseExamplesConsolidated.md')};
 }
 
 test('explicit selection, block order, normalized output, and untouched source bytes', async (t) => {
@@ -209,7 +210,7 @@ test('manifest schema, resource JSON, and late README validation fail before rep
   await buildKnowledgeBase({repoRoot: f.root});
   const previous = await fs.readFile(f.output);
   for (const bad of ['{', '{}', '[]', '{"examples": "all"}', '{"examples": [], "includeAll": true}']) {
-    await f.write('knowledgebase/examples.json', bad);
+    await f.write('docs/knowledgebase/examples.json', bad);
     await assert.rejects(buildKnowledgeBase({repoRoot: f.root}));
     assert.deepEqual(await fs.readFile(f.output), previous);
   }
@@ -245,7 +246,7 @@ test('symlink escapes and aliases are rejected at example, file, and resource bo
 
 test('CLI build/check works outside the repo; missing and stale checks write nothing', async (t) => {
   const f = await fixture(t);
-  const script = path.join(f.root, 'knowledgebase/buildApiEaseExamplesKnowledgeBase.js');
+  const script = path.join(f.root, 'scripts/knowledgebase/buildApiEaseExamplesKnowledgeBase.js');
   const cli = (...args) => run(process.execPath, [script, ...args], {cwd: os.tmpdir()});
   const directory = path.dirname(f.output);
   const initialFiles = await fs.readdir(directory);
@@ -268,7 +269,7 @@ test('CLI build/check works outside the repo; missing and stale checks write not
 
 test('real bundle selects only the discount-code example and excludes README setup/references', async () => {
   const result = await generateKnowledgeBaseText();
-  const selected = JSON.parse(await fs.readFile(path.join(repoRoot, 'knowledgebase/examples.json'), 'utf8'));
+  const selected = JSON.parse(await fs.readFile(path.join(repoRoot, 'docs/knowledgebase/examples.json'), 'utf8'));
   assert.equal(selected.examples.length, 1);
   assert.equal(selected.examples[0].path, 'examples/shopify/discount-codes/details');
   assert.equal(result.sectionCount, 4);

@@ -2,6 +2,8 @@
   "name": "apiease-template",
   "private": true,
   "scripts": {
+    "knowledge:build": "node scripts/knowledgebase/buildApiEaseExamplesKnowledgeBase.js",
+    "knowledge:check": "node scripts/knowledgebase/buildApiEaseExamplesKnowledgeBase.js --check",
     "knowledge:pull-local": "node scripts/knowledgebase/pullApiEaseDocsKnowledgeBase.js"
   }
 }

@@ -7,12 +7,14 @@ This repository contains APIEase examples. Its curated knowledge base packages s
 Use Node.js 18 or newer; no dependency installation is required. From the repository root:
 
 ```bash
-node knowledgebase/buildApiEaseExamplesKnowledgeBase.js
+node scripts/knowledgebase/buildApiEaseExamplesKnowledgeBase.js
 node --test test/examples-knowledgebase.test.js
-node knowledgebase/buildApiEaseExamplesKnowledgeBase.js --check
+node scripts/knowledgebase/buildApiEaseExamplesKnowledgeBase.js --check
 ```
 
-The builder reads [knowledgebase/examples.json](knowledgebase/examples.json) and writes [knowledgebase/apiEaseExamplesConsolidated.md](knowledgebase/apiEaseExamplesConsolidated.md). Never edit the generated bundle manually. Rebuild and check after changing selected content, markers, the manifest, or the builder. Run all repository tests with `node --test test/*.test.js`.
+You can also use `npm run knowledge:build` to build the examples bundle and `npm run knowledge:check` to check it.
+
+Knowledge base content lives in `docs/knowledgebase/`, alongside the imported product documentation. The builder reads [docs/knowledgebase/examples.json](docs/knowledgebase/examples.json) and writes [docs/knowledgebase/apiEaseExamplesConsolidated.md](docs/knowledgebase/apiEaseExamplesConsolidated.md). Never edit the generated bundle manually. Rebuild and check after changing selected content, markers, the manifest, or the builder. Run all repository tests with `node --test test/*.test.js`.
 
 The bundle follows the public docs consolidation format: one `SOURCE`, `TITLE`, and `CONTENT` section per selected file, in manifest order. Sources point to `https://github.com/APIEase/apiease-examples/blob/main/`, the repository's canonical origin and main branch. The builder pins that base so forks, source archives, working directories, and local Git configuration do not change generated content.
 
@@ -50,7 +52,7 @@ Include useful constraints such as access scopes, server-side authorization, sep
 ## Add or remove examples
 
 1. Curate the example's README with markers and review its resource files.
-2. Add an entry to `knowledgebase/examples.json`. Its `path` must be a directory below `examples/`, relative to the repository root. Its `files` array lists `README.md` and/or individual JSON paths relative to that example, under resource directories defined in `apiease.config.js`.
+2. Add an entry to `docs/knowledgebase/examples.json`. Its `path` must be a directory below `examples/`, relative to the repository root. Its `files` array lists `README.md` and/or individual JSON paths relative to that example, under resource directories defined in `apiease.config.js`.
 3. Order entries and files as they should appear in the bundle. Only explicitly listed files participate. Markers alone never enroll an example; new examples, other resources, `answer.md`, and `create-resources.sh` are not automatically included.
 4. To remove a file, delete its selection; to remove an example, delete its manifest entry. Source examples can remain in the repository. An empty `examples` array produces an empty bundle.
 5. Rebuild, run the focused tests, run `--check`, and review the manifest/source changes together with the generated diff.

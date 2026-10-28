@@ -2,7 +2,7 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const {randomUUID} = require('node:crypto');
 
-const REPO_ROOT = path.resolve(__dirname, '..');
+const REPO_ROOT = path.resolve(__dirname, '../..');
 const OUTPUT_NAME = 'apiEaseExamplesConsolidated.md';
 // Canonical origin and branch, independent of a contributor's fork or checkout path.
 const SOURCE_ROOT = 'https://github.com/APIEase/apiease-examples/blob/main/';
@@ -62,7 +62,7 @@ function onlyKeys(value, keys, label) {
 }
 
 async function selectedFiles(repoRoot) {
-  const manifest = await readJson(path.join(repoRoot, 'knowledgebase/examples.json'), 'examples.json');
+  const manifest = await readJson(path.join(repoRoot, 'docs/knowledgebase/examples.json'), 'examples.json');
   onlyKeys(manifest, ['examples'], 'examples.json');
   if (!Array.isArray(manifest.examples)) fail('examples.json', 'examples must be an array');
 
@@ -277,7 +277,7 @@ async function generateKnowledgeBaseText({repoRoot = REPO_ROOT} = {}) {
     sections.push(['SOURCE', sourceUrl, '', 'TITLE', normalizeDomain(title), '', 'CONTENT', normalizeDomain(body), ''].join('\n'));
   }
   return {
-    outputPath: path.join(repoRoot, 'knowledgebase', OUTPUT_NAME),
+    outputPath: path.join(repoRoot, 'docs/knowledgebase', OUTPUT_NAME),
     sectionCount: files.length,
     text: sections.join('\n'),
   };
@@ -291,7 +291,7 @@ async function buildKnowledgeBase({check = false, repoRoot = REPO_ROOT} = {}) {
     let existing = null;
     try { existing = await fs.readFile(outputPath, 'utf8'); }
     catch (error) { if (error.code !== 'ENOENT') throw error; }
-    if (existing !== text) throw new Error('Examples knowledge base is missing or stale. Run node knowledgebase/buildApiEaseExamplesKnowledgeBase.js');
+    if (existing !== text) throw new Error('Examples knowledge base is missing or stale. Run node scripts/knowledgebase/buildApiEaseExamplesKnowledgeBase.js');
   } else {
     const temporaryPath = `${outputPath}.${randomUUID()}.tmp`;
     try {
@@ -307,7 +307,7 @@ async function buildKnowledgeBase({check = false, repoRoot = REPO_ROOT} = {}) {
 if (require.main === module) {
   const args = process.argv.slice(2);
   if (args.some((arg) => arg !== '--check') || args.length > 1) {
-    console.error('Usage: node knowledgebase/buildApiEaseExamplesKnowledgeBase.js [--check]');
+    console.error('Usage: node scripts/knowledgebase/buildApiEaseExamplesKnowledgeBase.js [--check]');
     process.exitCode = 1;
   } else {
     buildKnowledgeBase({check: args.includes('--check')}).then(({sectionCount}) => {

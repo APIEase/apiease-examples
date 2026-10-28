@@ -12,14 +12,14 @@ This repository contains reusable APIEase examples and a curated examples knowle
 
 ## Enrollment and maintenance
 
-- `knowledgebase/examples.json` explicitly enrolls examples and individual files in bundle order. Paths to examples are relative to the repository root; file paths are relative to that example. Only `README.md` and selected JSON in configured resource directories are supported. Do not add `answer.md`, `create-resources.sh`, or other files implicitly.
+- `docs/knowledgebase/examples.json` explicitly enrolls examples and individual files in bundle order. Paths to examples are relative to the repository root; file paths are relative to that example. Only `README.md` and selected JSON in configured resource directories are supported. Do not add `answer.md`, `create-resources.sh`, or other files implicitly.
 - README markers curate content; they do not enroll an example. Add a manifest entry only when that example and its files are deliberately selected for the bundle.
-- Never edit `knowledgebase/apiEaseExamplesConsolidated.md` manually. For changes to selected content, selections, markers, or generation logic, rebuild and check it:
+- Never edit `docs/knowledgebase/apiEaseExamplesConsolidated.md` manually. For changes to selected content, selections, markers, or generation logic, rebuild and check it:
 
   ```bash
-  node knowledgebase/buildApiEaseExamplesKnowledgeBase.js
+  node scripts/knowledgebase/buildApiEaseExamplesKnowledgeBase.js
   node --test test/examples-knowledgebase.test.js
-  node knowledgebase/buildApiEaseExamplesKnowledgeBase.js --check
+  node scripts/knowledgebase/buildApiEaseExamplesKnowledgeBase.js --check
   ```
 
 - Generation normalizes only the exact development hostname `store-apiease-admin-local.myshopify.com` to `yourstore.myshopify.com` in emitted content. Preserve source resource files; normalization is not a source migration.
