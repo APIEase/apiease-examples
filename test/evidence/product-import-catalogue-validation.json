@@ -1,0 +1,33 @@
+{
+  "copyChecks": {
+    "byteIdenticalToOriginal": 55,
+    "canonicalSourceValidationPassed": 55,
+    "graphqlQueriesParsed": 26
+  },
+  "focusedTests": {
+    "passed": 38,
+    "failed": 0
+  },
+  "fullRepositoryTests": {
+    "passed": 46,
+    "failed": 1
+  },
+  "bundleCheck": {
+    "current": true,
+    "selectedFiles": 62
+  },
+  "preExistingFailure": {
+    "test": "test/shopify-discount-code-details-example.test.js",
+    "reproducedFromHeadInTemporaryDirectory": true,
+    "filesUnchangedFromHead": [
+      "test/shopify-discount-code-details-example.test.js",
+      "examples/shopify/discount-codes/details/create-resources.sh",
+      "examples/shopify/discount-codes/details/resources/requests/lookup-shopify-discount-code-admin-graphql.json",
+      "examples/shopify/discount-codes/details/resources/requests/lookup-shopify-discount-code-details.json",
+      "examples/shopify/discount-codes/details/resources/widgets/lookup-shopify-discount-code-details.json"
+    ],
+    "expected": "https://your-store.myshopify.com/admin/api/2026-04/graphql.json",
+    "actual": "https://store-apiease-admin-local.myshopify.com/admin/api/2026-10/graphql.json"
+  },
+  "liveStoreMutations": false
+}

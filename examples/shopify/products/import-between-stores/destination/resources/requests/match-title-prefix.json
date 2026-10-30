@@ -1,0 +1,12 @@
+{
+  "contractVersion": 1,
+  "description": "title must be a string and prefix must be a nonempty string; both fields are required. Compares literal values case-sensitively without normalization. Reads liquidParamsEmbedded and returns success, matches, and error. No saved defaults, triggers, dependencies, or Shopify calls.",
+  "formatVersion": 1,
+  "handle": "match-title-prefix",
+  "liquid": "{%- assign valid = true -%}\n{%- assign matches = false -%}\n{%- assign inputs = nil -%}\n{%- assign hasInputs = apiEaseParameters | has_key: 'liquidParams' -%}\n{%- if hasInputs -%}\n  {%- assign inputs = apiEaseParameters.liquidParams -%}\n{%- endif -%}\n{%- if valid -%}\n  {%- assign valid = inputs | has_key: 'title' -%}\n{%- endif -%}\n{%- if valid -%}\n  {%- assign valid = inputs.title | is_type: 'string' -%}\n{%- endif -%}\n{%- if valid -%}\n  {%- assign valid = inputs | has_key: 'prefix' -%}\n{%- endif -%}\n{%- if valid -%}\n  {%- assign valid = inputs.prefix | is_type: 'string' -%}\n{%- endif -%}\n{%- if valid -%}\n  {%- if inputs.prefix == '' -%}{%- assign valid = false -%}{%- endif -%}\n{%- endif -%}\n{%- if valid -%}\n  {%- assign prefixLength = inputs.prefix | size -%}\n  {%- assign titlePrefix = inputs.title | slice: 0, prefixLength -%}\n  {%- if titlePrefix == inputs.prefix -%}{%- assign matches = true -%}{%- endif -%}\n{%- endif -%}\n{%- if valid -%}\n{\"success\":true,\"matches\":{{ matches | json }},\"error\":null}\n{%- else -%}\n{\"success\":false,\"matches\":false,\"error\":\"title must be a string and prefix must be a nonempty string; both fields are required.\"}\n{%- endif -%}\n",
+  "name": "Match a title against a literal prefix",
+  "parameters": [],
+  "resourceType": "request",
+  "triggers": [],
+  "type": "liquid"
+}

@@ -1,0 +1,25 @@
+{
+  "address": "https://store-apiease-admin-staging.myshopify.com/admin/api/2026-10/graphql.json",
+  "contractVersion": 1,
+  "description": "Reads the authenticated shop’s primary location ID using the Shopify location query without an ID argument. Takes no runtime inputs and preserves a null location or errors. Uses APIEase server-side Shopify authentication and returns the native HTTP/GraphQL response unchanged. Each invocation makes one Shopify request with no product or variant reads, triggers, chaining or dependencies.",
+  "formatVersion": 1,
+  "handle": "read-default-location",
+  "method": "POST",
+  "name": "Read the default destination location",
+  "parameters": [
+    {
+      "name": "Content-Type",
+      "sensitive": false,
+      "type": "header",
+      "value": "application/json"
+    },
+    {
+      "sensitive": false,
+      "type": "body",
+      "value": "{\"query\":\"query ReadDefaultLocation {\\n  location { id }\\n}\"}"
+    }
+  ],
+  "resourceType": "request",
+  "triggers": [],
+  "type": "http"
+}

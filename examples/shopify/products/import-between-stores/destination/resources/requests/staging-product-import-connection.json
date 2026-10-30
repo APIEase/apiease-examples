@@ -1,0 +1,45 @@
+{
+  "address": "https://app-admin-staging.apiease.com/api/remote/caller/call",
+  "contractVersion": 1,
+  "description": "Calls the staging APIEase authenticated remote caller by default. The deployment runner also uses stageApiPath for the supported Project API bootstrap, validation, plan and apply endpoints, keeping staging bindings separate. Requires manual entry of the staging APIEase API key into the Sensitive x-apiease-api-key header; this is not a Shopify token. Defaults to read-product-import-test. Runtime query parameters supply requestId and serialized liquidParamsEmbedded. No local Shopify credential is forwarded.",
+  "formatVersion": 1,
+  "handle": "staging-product-import-connection",
+  "method": "POST",
+  "name": "Staging product import connection",
+  "parameters": [
+    {
+      "name": "Content-Type",
+      "sensitive": false,
+      "type": "header",
+      "value": "application/json"
+    },
+    {
+      "name": "requestId",
+      "sensitive": false,
+      "type": "query",
+      "value": "read-product-import-test"
+    },
+    {
+      "name": "x-apiease-api-key",
+      "sensitive": true,
+      "type": "header",
+      "value": {
+        "mode": "preserve"
+      }
+    },
+    {
+      "name": "x-shop-myshopify-domain",
+      "sensitive": false,
+      "type": "header",
+      "value": "store-apiease-admin-staging.myshopify.com"
+    },
+    {
+      "sensitive": false,
+      "type": "body",
+      "value": "{}"
+    }
+  ],
+  "resourceType": "request",
+  "triggers": [],
+  "type": "http"
+}

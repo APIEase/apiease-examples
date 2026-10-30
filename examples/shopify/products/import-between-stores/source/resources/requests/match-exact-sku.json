@@ -1,0 +1,12 @@
+{
+  "contractVersion": 1,
+  "description": "candidateSku must be present as a string or null; expectedSku must be a present nonempty string. Compares literal values case-sensitively without normalization. Reads liquidParamsEmbedded and returns success, matches, and error. No saved defaults, triggers, dependencies, or Shopify calls.",
+  "formatVersion": 1,
+  "handle": "match-exact-sku",
+  "liquid": "{%- assign valid = true -%}\n{%- assign matches = false -%}\n{%- assign inputs = nil -%}\n{%- assign hasInputs = apiEaseParameters | has_key: 'liquidParams' -%}\n{%- if hasInputs -%}\n  {%- assign inputs = apiEaseParameters.liquidParams -%}\n{%- endif -%}\n{%- if valid -%}\n  {%- assign valid = inputs | has_key: 'candidateSku' -%}\n{%- endif -%}\n{%- if valid -%}\n  {%- assign valid = inputs.candidateSku | is_type: 'string' -%}\n  {%- assign isNull = inputs.candidateSku | is_type: 'null' -%}\n  {%- if isNull -%}{%- assign valid = true -%}{%- endif -%}\n{%- endif -%}\n{%- if valid -%}\n  {%- assign valid = inputs | has_key: 'expectedSku' -%}\n{%- endif -%}\n{%- if valid -%}\n  {%- assign valid = inputs.expectedSku | is_type: 'string' -%}\n{%- endif -%}\n{%- if valid -%}\n  {%- if inputs.expectedSku == '' -%}{%- assign valid = false -%}{%- endif -%}\n{%- endif -%}\n{%- if valid -%}\n  {%- if inputs.candidateSku == inputs.expectedSku -%}{%- assign matches = true -%}{%- endif -%}\n{%- endif -%}\n{%- if valid -%}\n{\"success\":true,\"matches\":{{ matches | json }},\"error\":null}\n{%- else -%}\n{\"success\":false,\"matches\":false,\"error\":\"candidateSku must be present as a string or null; expectedSku must be a present nonempty string.\"}\n{%- endif -%}\n",
+  "name": "Match a nonempty SKU exactly",
+  "parameters": [],
+  "resourceType": "request",
+  "triggers": [],
+  "type": "liquid"
+}

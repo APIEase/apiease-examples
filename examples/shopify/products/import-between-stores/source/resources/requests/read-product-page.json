@@ -1,0 +1,25 @@
+{
+  "address": "https://store-apiease-admin-staging.myshopify.com/admin/api/2026-10/graphql.json",
+  "contractVersion": 1,
+  "description": "Reads exactly one Shopify product page with a fixed page size of 2 and returns the native HTTP/GraphQL response, including errors. Optionally supply bodyEmbedded.variables.after with the previous endCursor unchanged; omitted or null reads the first page. Uses APIEase server-side Shopify authentication. No triggers or dependencies.",
+  "formatVersion": 1,
+  "handle": "read-product-page",
+  "method": "POST",
+  "name": "Read one page of products",
+  "parameters": [
+    {
+      "name": "Content-Type",
+      "sensitive": false,
+      "type": "header",
+      "value": "application/json"
+    },
+    {
+      "sensitive": false,
+      "type": "body",
+      "value": "{\"query\":\"query ReadProductPage($after: String) {\\n  products(first: 2, after: $after) {\\n    nodes {\\n      id\\n      title\\n      handle\\n    }\\n    pageInfo {\\n      hasNextPage\\n      endCursor\\n    }\\n  }\\n}\"}"
+    }
+  ],
+  "resourceType": "request",
+  "triggers": [],
+  "type": "http"
+}

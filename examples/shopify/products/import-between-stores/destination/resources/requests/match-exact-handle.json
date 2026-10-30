@@ -1,0 +1,12 @@
+{
+  "contractVersion": 1,
+  "description": "candidateHandle and expectedHandle must both be present nonempty strings. Compares literal values case-sensitively without normalization. Reads liquidParamsEmbedded and returns success, matches, and error. No saved defaults, triggers, dependencies, or Shopify calls.",
+  "formatVersion": 1,
+  "handle": "match-exact-handle",
+  "liquid": "{%- assign valid = true -%}\n{%- assign matches = false -%}\n{%- assign inputs = nil -%}\n{%- assign hasInputs = apiEaseParameters | has_key: 'liquidParams' -%}\n{%- if hasInputs -%}\n  {%- assign inputs = apiEaseParameters.liquidParams -%}\n{%- endif -%}\n{%- if valid -%}\n  {%- assign valid = inputs | has_key: 'candidateHandle' -%}\n{%- endif -%}\n{%- if valid -%}\n  {%- assign valid = inputs.candidateHandle | is_type: 'string' -%}\n{%- endif -%}\n{%- if valid -%}\n  {%- if inputs.candidateHandle == '' -%}{%- assign valid = false -%}{%- endif -%}\n{%- endif -%}\n{%- if valid -%}\n  {%- assign valid = inputs | has_key: 'expectedHandle' -%}\n{%- endif -%}\n{%- if valid -%}\n  {%- assign valid = inputs.expectedHandle | is_type: 'string' -%}\n{%- endif -%}\n{%- if valid -%}\n  {%- if inputs.expectedHandle == '' -%}{%- assign valid = false -%}{%- endif -%}\n{%- endif -%}\n{%- if valid -%}\n  {%- if inputs.candidateHandle == inputs.expectedHandle -%}{%- assign matches = true -%}{%- endif -%}\n{%- endif -%}\n{%- if valid -%}\n{\"success\":true,\"matches\":{{ matches | json }},\"error\":null}\n{%- else -%}\n{\"success\":false,\"matches\":false,\"error\":\"candidateHandle and expectedHandle must both be present nonempty strings.\"}\n{%- endif -%}\n",
+  "name": "Match two handles exactly",
+  "parameters": [],
+  "resourceType": "request",
+  "triggers": [],
+  "type": "liquid"
+}

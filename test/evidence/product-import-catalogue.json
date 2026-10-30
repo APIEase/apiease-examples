@@ -1,0 +1,644 @@
+{
+  "purpose": "Provenance for byte-preserved catalogue copies; no store bindings or credentials copied.",
+  "activeUniqueHandles": [
+    "seed-product-import-test",
+    "read-product-import-test",
+    "import-product-import-test",
+    "cleanup-product-import-test",
+    "product-import-workflow",
+    "product-import-create-one",
+    "product-import-shop-context",
+    "product-import-map-input",
+    "product-import-duplicates",
+    "product-import-catalog-sku-page",
+    "product-import-create",
+    "product-import-ownership",
+    "product-import-owned-page",
+    "product-import-complete-product",
+    "product-import-media-observation",
+    "product-import-inventory-page",
+    "product-import-delete",
+    "read-product-page",
+    "read-product-detail-page",
+    "read-product-variant-page",
+    "read-product-image-page",
+    "read-product-media-page",
+    "read-default-location",
+    "match-title-prefix",
+    "filter-products-exact-handle",
+    "match-exact-handle",
+    "filter-variants-exact-sku",
+    "match-exact-sku"
+  ],
+  "supplementaryUniqueHandles": [
+    "read-catalog-variant-page",
+    "filter-product-list",
+    "staging-product-import-connection"
+  ],
+  "roleInventories": {
+    "source": {
+      "active": [
+        "seed-product-import-test",
+        "read-product-import-test",
+        "cleanup-product-import-test",
+        "product-import-workflow",
+        "product-import-create-one",
+        "product-import-shop-context",
+        "product-import-map-input",
+        "product-import-duplicates",
+        "product-import-catalog-sku-page",
+        "product-import-create",
+        "product-import-ownership",
+        "product-import-owned-page",
+        "product-import-complete-product",
+        "product-import-media-observation",
+        "product-import-delete",
+        "read-product-page",
+        "read-product-detail-page",
+        "read-product-variant-page",
+        "read-product-image-page",
+        "read-product-media-page",
+        "read-default-location",
+        "match-title-prefix",
+        "filter-products-exact-handle",
+        "match-exact-handle",
+        "filter-variants-exact-sku",
+        "match-exact-sku"
+      ],
+      "supplementary": []
+    },
+    "destination": {
+      "active": [
+        "import-product-import-test",
+        "cleanup-product-import-test",
+        "product-import-workflow",
+        "product-import-create-one",
+        "product-import-shop-context",
+        "product-import-map-input",
+        "product-import-duplicates",
+        "product-import-catalog-sku-page",
+        "product-import-create",
+        "product-import-ownership",
+        "product-import-owned-page",
+        "product-import-complete-product",
+        "product-import-media-observation",
+        "product-import-inventory-page",
+        "product-import-delete",
+        "read-product-page",
+        "read-product-detail-page",
+        "read-product-variant-page",
+        "read-product-image-page",
+        "read-product-media-page",
+        "read-default-location",
+        "match-title-prefix",
+        "filter-products-exact-handle",
+        "match-exact-handle",
+        "filter-variants-exact-sku",
+        "match-exact-sku"
+      ],
+      "supplementary": [
+        "read-catalog-variant-page",
+        "filter-product-list",
+        "staging-product-import-connection"
+      ]
+    }
+  },
+  "resources": [
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/seed-product-import-test.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/seed-product-import-test.json",
+      "sha256": "6ee66ff6499fdf4dbc01e9231a581458118280875e2b09f9974fdc06b2ac55a3",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/read-product-import-test.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/read-product-import-test.json",
+      "sha256": "c47cb5db22304ecb7a761971f7b7dd13337d4813b664fc796856c95fac89fcf1",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/cleanup-product-import-test.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/cleanup-product-import-test.json",
+      "sha256": "957b6fd17c11be2de94eaaba71c53a5028fbbbc34f0f89adfaa766c438352a0e",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/product-import-workflow.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/product-import-workflow.json",
+      "sha256": "a3ca11e54b47573491378853364bcce62482a05bceff0e388025eeaa43a71762",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/product-import-create-one.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/product-import-create-one.json",
+      "sha256": "3072bd4834b6b9a5e7e03ad9c80ae882f8b24947c20d512ea240fc9a65b115eb",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/product-import-shop-context.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/product-import-shop-context.json",
+      "sha256": "6e2f2b50a84597028822aa456536e6fc18d5bfb87a9d26665485c5a3fe78412d",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/product-import-map-input.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/product-import-map-input.json",
+      "sha256": "a7a2352b56d406b0e1c2fc982f186c9cedf6457b77bee132f9ce126069440838",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/product-import-duplicates.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/product-import-duplicates.json",
+      "sha256": "c3ac0b544f665841bb8513942ebf654caba062ad928e00e0c84e5cd8020e8d68",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/product-import-catalog-sku-page.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/product-import-catalog-sku-page.json",
+      "sha256": "34abf28ed46a49eaeebbb214a346976ceb1390b2bb394f2175e7c89b855afd42",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/product-import-create.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/product-import-create.json",
+      "sha256": "62ee5d748f55620b3cbd5b720562ff0ce8f1442e3243f42030f298aec3790316",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/product-import-ownership.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/product-import-ownership.json",
+      "sha256": "0f48075d1d6e1d60d714431c20f53fef40f3ab659d29a266e4d9eb84b3df3452",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/product-import-owned-page.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/product-import-owned-page.json",
+      "sha256": "a819595a26e8c628d390690a435c2c821c239ee7c444fdeb6a043d0f8cdc3981",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/product-import-complete-product.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/product-import-complete-product.json",
+      "sha256": "ef8529fce6e532fe87077a6fb33bd7a3f5b7539e7b2a4235b7c265ac1605871f",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/product-import-media-observation.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/product-import-media-observation.json",
+      "sha256": "3ec8dc56b4ef4f92c76420150afc98b410314132c10ac5b9e456cb485612f2aa",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/product-import-delete.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/product-import-delete.json",
+      "sha256": "b9953b8de020de144088c726ab0bdcb75abe6770f2c7b7e48cb7645499a7ef61",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/read-product-page.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/read-product-page.json",
+      "sha256": "bc3e38e5d54c15b92a997aefba3b5b5b29477c628354968343193f416a4a99c1",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/read-product-detail-page.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/read-product-detail-page.json",
+      "sha256": "73944eff2ae74901fa05b28e87bdd74c64a6361f07f0e82f1861fd5a1dc945d6",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/read-product-variant-page.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/read-product-variant-page.json",
+      "sha256": "186db037c2c614af561bd2e0d3ec02a300e87ce91dbc78dad776fd42f8eb7af5",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/read-product-image-page.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/read-product-image-page.json",
+      "sha256": "6813a135496edd42bee9cee9a60f9fb5e4311e7d506c071fd7bf28de7949632b",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/read-product-media-page.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/read-product-media-page.json",
+      "sha256": "d08d8e71807210a91adf7f326a51a995f1b4975a5ccca19271ce9e5b746690e1",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/read-default-location.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/read-default-location.json",
+      "sha256": "27dc784eeddcbd9aa2d58316b1a81f2919c1711a4e46988d0d80dcf6043de9ea",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/match-title-prefix.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/match-title-prefix.json",
+      "sha256": "647cad16a62f33bd421134570b51908a3b042993f09e7c1743ad0635d0342e62",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/filter-products-exact-handle.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/filter-products-exact-handle.json",
+      "sha256": "c809ed6c15300c375ef081a7081315c0a7cc5cec31f7e6844ecafeba52e4c36b",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/match-exact-handle.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/match-exact-handle.json",
+      "sha256": "b66602123681f459e54f2bc261709803c00f62f60d78a14e163371c94d66402a",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/filter-variants-exact-sku.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/filter-variants-exact-sku.json",
+      "sha256": "2115517b8bfd07068883a4e4c18de527bf5997f71468279a916858aca206242b",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source/resources/requests/match-exact-sku.json",
+      "originalProject": "store-apiease-admin-staging",
+      "originalPath": "resources/requests/match-exact-sku.json",
+      "sha256": "4a1de2c88cdedafb7303050f28228ec2a54dadaad3f47d7b888edf936b4a8945",
+      "role": "source",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/import-product-import-test.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/import-product-import-test.json",
+      "sha256": "20846d0717e10d94e6e7a8ac4330e8d7872c64db8ed74deb7ba3a8d19ad59803",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/cleanup-product-import-test.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/cleanup-product-import-test.json",
+      "sha256": "3b4f946f5c795ab5275a81591d6ce34979b0ea14b5cbb1e5a69698c447d1c892",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/product-import-workflow.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/product-import-workflow.json",
+      "sha256": "95716570575dad5100e01fced70bd587b7e64c4a585078b9021797d9cf509ce6",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/product-import-create-one.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/product-import-create-one.json",
+      "sha256": "9a91f355d3afd9a34b74d77cb06716ee8e23a3e667be187cabb48a68f0dbd7d8",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/product-import-shop-context.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/product-import-shop-context.json",
+      "sha256": "6974727793bccfd165548b13e7fb0db87dac52532e200dc29df8ff49f6e4444d",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/product-import-map-input.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/product-import-map-input.json",
+      "sha256": "a7a2352b56d406b0e1c2fc982f186c9cedf6457b77bee132f9ce126069440838",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/product-import-duplicates.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/product-import-duplicates.json",
+      "sha256": "c3ac0b544f665841bb8513942ebf654caba062ad928e00e0c84e5cd8020e8d68",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/product-import-catalog-sku-page.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/product-import-catalog-sku-page.json",
+      "sha256": "8fa2991798e61420b21e3faac4ffa2f757f5cfbb919335c4ca2b2543c4460a6b",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/product-import-create.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/product-import-create.json",
+      "sha256": "e00d6d01f70416d0fb0d7ed819d1f3501288616e93c7a98be4e25bf87d918dee",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/product-import-ownership.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/product-import-ownership.json",
+      "sha256": "44d88635f464e17c0b2f92d304ccab9f239a69ecf0bb5a4ac30b032846b3490c",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/product-import-owned-page.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/product-import-owned-page.json",
+      "sha256": "ef3fef8cfc69e06619d9f553b8384a3c89171125d99502c4c8bd15842941f8d8",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/product-import-complete-product.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/product-import-complete-product.json",
+      "sha256": "ef8529fce6e532fe87077a6fb33bd7a3f5b7539e7b2a4235b7c265ac1605871f",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/product-import-media-observation.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/product-import-media-observation.json",
+      "sha256": "3ec8dc56b4ef4f92c76420150afc98b410314132c10ac5b9e456cb485612f2aa",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/product-import-inventory-page.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/product-import-inventory-page.json",
+      "sha256": "0d8c3767a015d4bbc5f16fc61b5cbe3ce600745662a425a07b792b7be6ed939e",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/product-import-delete.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/product-import-delete.json",
+      "sha256": "e5c57daf4aebdd177d590c7d1d31d5a7647b2d539deeb31751cda88db1760b48",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/read-product-page.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/read-product-page.json",
+      "sha256": "9abeddddac277f01c88828d1643237d4e0352c6898d5190622b616ac17af03f7",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/read-product-detail-page.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/read-product-detail-page.json",
+      "sha256": "31d92b45c0cedce176c05ea460050af9ff07aa209948f72494370309b2d57925",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/read-product-variant-page.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/read-product-variant-page.json",
+      "sha256": "34357b36dfadd22555e19c9edfeba6208346223cfb48b526e0cb70c6db344337",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/read-product-image-page.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/read-product-image-page.json",
+      "sha256": "8b3f37122874e5b5f739dda5db7ad09d0071711aeb37a6a6f1517cb5b2e7348b",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/read-product-media-page.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/read-product-media-page.json",
+      "sha256": "c5e50fc29d94e60dcc9bdf5795701823227824f6798dd1fa8db759da67fc9aba",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/read-default-location.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/read-default-location.json",
+      "sha256": "12d9b533277d0b22eefbae4c8b8daf865282f6beb0432220933b8bf9f7ab8569",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/match-title-prefix.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/match-title-prefix.json",
+      "sha256": "647cad16a62f33bd421134570b51908a3b042993f09e7c1743ad0635d0342e62",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/filter-products-exact-handle.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/filter-products-exact-handle.json",
+      "sha256": "c809ed6c15300c375ef081a7081315c0a7cc5cec31f7e6844ecafeba52e4c36b",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/match-exact-handle.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/match-exact-handle.json",
+      "sha256": "b66602123681f459e54f2bc261709803c00f62f60d78a14e163371c94d66402a",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/filter-variants-exact-sku.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/filter-variants-exact-sku.json",
+      "sha256": "2115517b8bfd07068883a4e4c18de527bf5997f71468279a916858aca206242b",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/match-exact-sku.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/match-exact-sku.json",
+      "sha256": "4a1de2c88cdedafb7303050f28228ec2a54dadaad3f47d7b888edf936b4a8945",
+      "role": "destination",
+      "usage": "active"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/read-catalog-variant-page.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/read-catalog-variant-page.json",
+      "sha256": "cb29d7f8f561a3fa2fb8a6f6636a737ffdd2505ece6e9559b70b28381853ebd2",
+      "role": "destination",
+      "usage": "supplementary"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/filter-product-list.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/filter-product-list.json",
+      "sha256": "706f63616b9e2a9239e020a4456c07f153d981bab46021bb1a76073ce4770e85",
+      "role": "destination",
+      "usage": "supplementary"
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination/resources/requests/staging-product-import-connection.json",
+      "originalProject": "store-apiease-admin-local",
+      "originalPath": "resources/requests/staging-product-import-connection.json",
+      "sha256": "5abb46fa094aeec0c95af14d0556f374d5bce6b0aab2e12bf4e9ed3f8cb09d11",
+      "role": "destination",
+      "usage": "supplementary"
+    }
+  ],
+  "originalVerification": {
+    "date": "2026-10-30",
+    "runId": "pi-20261030202712-cc1474a9",
+    "completed": true,
+    "seeded": 4,
+    "eligible": 3,
+    "imported": 3,
+    "pagination": {
+      "products": 2,
+      "variants": 4,
+      "images": 4
+    },
+    "independentReadback": {
+      "products": 3,
+      "variants": 5,
+      "images": 5,
+      "fieldsAndDefaultLocationInventoryMatch": true,
+      "availableQuantities": [
+        0,
+        0,
+        8,
+        9,
+        0
+      ],
+      "allMediaReady": true,
+      "imageFilesByteIdentical": 4
+    },
+    "imageComparison": {
+      "byteIdenticalFiles": 4,
+      "visuallyMatchingFilesWithSmallPixelDifferences": 1,
+      "meanAbsoluteChannelDifference": 0.00909662356321839,
+      "psnrDb": 64.26840292259992
+    },
+    "checks": {
+      "maximum-counts-skips": {
+        "selected": 1,
+        "attempted": 1,
+        "created": 0,
+        "skipped": 1,
+        "failed": 0
+      },
+      "controlled-handle-variation-against-real-destination": {
+        "selected": 1,
+        "attempted": 1,
+        "created": 0,
+        "skipped": 1,
+        "failed": 0
+      },
+      "default-bounded-batch": {
+        "selected": 3,
+        "attempted": 3,
+        "created": 2,
+        "skipped": 1,
+        "failed": 0
+      },
+      "repeat-import": {
+        "selected": 3,
+        "attempted": 3,
+        "created": 0,
+        "skipped": 3,
+        "failed": 0
+      },
+      "repeat-seed-reconciles-owned-fixtures": {
+        "selected": 4,
+        "attempted": 4,
+        "created": 0,
+        "skipped": 4,
+        "failed": 0
+      }
+    },
+    "cleanup": {
+      "local": {
+        "complete": true,
+        "deleted": 3,
+        "remaining": []
+      },
+      "staging": {
+        "complete": true,
+        "deleted": 4,
+        "remaining": []
+      }
+    },
+    "unrelatedCatalogs": {
+      "local": {
+        "products": 11,
+        "beforeAfterFingerprintsMatch": true
+      },
+      "staging": {
+        "products": 15,
+        "beforeAfterFingerprintsMatch": true
+      }
+    },
+    "controlledWorkflowTests": 20,
+    "querySyntaxTests": 1
+  },
+  "catalogueCopyLiveExecution": false
+}

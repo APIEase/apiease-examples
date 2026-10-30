@@ -1,6 +1,10 @@
 # Custom README
 
-This repository contains APIEase examples. Its curated knowledge base packages selected explanations and resource definitions for reuse by future consumers. The initial selection is the [Shopify discount-code details example](examples/shopify/discount-codes/details/README.md).
+This repository contains APIEase examples. Its curated knowledge base packages selected explanations and resource definitions so Apex can borrow concrete patterns when building store needs. The current selection includes the [Shopify discount-code details example](examples/shopify/discount-codes/details/README.md) and the [connected product import lifecycle](examples/shopify/products/import-between-stores/README.md).
+
+The product-import catalogue includes all 28 active workflow handles and three supplementary references from the verified staging-to-local work. Its [source package](examples/shopify/products/import-between-stores/source/README.md) contains 26 requests; its [destination package](examples/shopify/products/import-between-stores/destination/README.md) contains 26 active requests plus the three supplementary requests. These 55 JSON files preserve the original sources byte for byte. Duplicate handles across packages are intentional: each store needs its own dependencies and several coordinators have different identity and recovery logic. Do not merge both packages into one project.
+
+The marked explanations cover contracts, dependencies, fixture-specific policies, caller-owned persistence, duplicate-scan cost, image readiness, and cleanup recovery. They distinguish the original successful live cycle from controlled failure tests and catalogue-only checks. [Copy provenance and verification summary](test/evidence/product-import-catalogue.json) remain outside the generated knowledge base; the reusable explanations and every selected request are enrolled explicitly. Store bindings, secure configuration, and raw run manifests are not copied.
 
 ## Build and check the examples knowledge base
 
@@ -59,4 +63,4 @@ Include useful constraints such as access scopes, server-side authorization, sep
 
 Paths use forward slashes and may not contain absolute, empty, `.` or `..` segments. Missing files, duplicate selections (including symlink aliases), invalid JSON, and paths or symlinks escaping permitted directories fail with a diagnostic.
 
-Only the discount-code details README, two requests, and widget are initially enrolled. Importing this bundle into `../apiease` and wiring it into the assistant remain separate work.
+The manifest enrolls the discount-code details README, two requests and widget, plus the product-import overview, both role READMEs and all 55 request files. Importing this bundle into `../apiease` and wiring it into the assistant remain separate consumer-integration work.

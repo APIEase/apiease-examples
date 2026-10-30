@@ -267,18 +267,27 @@ test('CLI build/check works outside the repo; missing and stale checks write not
   assert.equal((await fs.readdir(directory)).filter((file) => file.endsWith('.tmp')).length, 0);
 });
 
-test('real bundle selects only the discount-code example and excludes README setup/references', async () => {
+test('real bundle enrolls discount and product-import knowledge and excludes setup/reference material', async () => {
   const result = await generateKnowledgeBaseText();
   const selected = JSON.parse(await fs.readFile(path.join(repoRoot, 'docs/knowledgebase/examples.json'), 'utf8'));
-  assert.equal(selected.examples.length, 1);
-  assert.equal(selected.examples[0].path, 'examples/shopify/discount-codes/details');
-  assert.equal(result.sectionCount, 4);
+  assert.deepEqual(selected.examples.map((entry) => entry.path), [
+    'examples/shopify/discount-codes/details',
+    'examples/shopify/products/import-between-stores',
+    'examples/shopify/products/import-between-stores/source',
+    'examples/shopify/products/import-between-stores/destination',
+  ]);
+  assert.equal(result.sectionCount, 62);
   const sources = result.text.match(/^https:\/\/github[^\n]+/gm);
-  assert.deepEqual(sources, selected.examples[0].files.map((file) =>
-    `${SOURCE_ROOT}${selected.examples[0].path}/${file}`));
-  assert.doesNotMatch(result.text, /Beginner-friendly steps|Official links|When to extend|apiease-kb:|answer\.md|create-resources\.sh|store-apiease-admin-local/);
+  assert.deepEqual(sources, selected.examples.flatMap((entry) => entry.files.map((file) =>
+    `${SOURCE_ROOT}${entry.path}/${file}`)));
+  assert.doesNotMatch(result.text, /Beginner-friendly steps|Official links|When to extend|Installation boundary|Use these examples in a project|apiease-kb:|answer\.md|create-resources\.sh|store-apiease-admin-local/);
   assert.match(result.text, /read_discounts/);
   assert.match(result.text, /Configure the Storefront App Proxy trigger separately/);
   assert.match(result.text, /Authorization stays server-side/);
   assert.match(result.text, /yourstore\.myshopify\.com/);
+  assert.match(result.text, /store-apiease-admin-staging\.myshopify\.com/);
+  assert.match(result.text, /same entry point with/);
+  assert.match(result.text, /not an atomic/);
+  assert.match(result.text, /Supplementary references outside the active cycle/);
+  assert.match(result.text, /https:\/\/github\.com\/APIEase\/apiease-examples\/blob\/main\/examples\/shopify\/products\/import-between-stores\/source\/resources\/requests\/seed-product-import-test\.json/);
 });

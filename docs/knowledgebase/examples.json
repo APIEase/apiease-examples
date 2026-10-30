@@ -8,6 +8,79 @@
         "resources/requests/lookup-shopify-discount-code-details.json",
         "resources/widgets/lookup-shopify-discount-code-details.json"
       ]
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores",
+      "files": [
+        "README.md"
+      ]
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/source",
+      "files": [
+        "README.md",
+        "resources/requests/seed-product-import-test.json",
+        "resources/requests/read-product-import-test.json",
+        "resources/requests/cleanup-product-import-test.json",
+        "resources/requests/product-import-workflow.json",
+        "resources/requests/product-import-create-one.json",
+        "resources/requests/product-import-shop-context.json",
+        "resources/requests/product-import-map-input.json",
+        "resources/requests/product-import-duplicates.json",
+        "resources/requests/product-import-catalog-sku-page.json",
+        "resources/requests/product-import-create.json",
+        "resources/requests/product-import-ownership.json",
+        "resources/requests/product-import-owned-page.json",
+        "resources/requests/product-import-complete-product.json",
+        "resources/requests/product-import-media-observation.json",
+        "resources/requests/product-import-delete.json",
+        "resources/requests/read-product-page.json",
+        "resources/requests/read-product-detail-page.json",
+        "resources/requests/read-product-variant-page.json",
+        "resources/requests/read-product-image-page.json",
+        "resources/requests/read-product-media-page.json",
+        "resources/requests/read-default-location.json",
+        "resources/requests/match-title-prefix.json",
+        "resources/requests/filter-products-exact-handle.json",
+        "resources/requests/match-exact-handle.json",
+        "resources/requests/filter-variants-exact-sku.json",
+        "resources/requests/match-exact-sku.json"
+      ]
+    },
+    {
+      "path": "examples/shopify/products/import-between-stores/destination",
+      "files": [
+        "README.md",
+        "resources/requests/import-product-import-test.json",
+        "resources/requests/cleanup-product-import-test.json",
+        "resources/requests/product-import-workflow.json",
+        "resources/requests/product-import-create-one.json",
+        "resources/requests/product-import-shop-context.json",
+        "resources/requests/product-import-map-input.json",
+        "resources/requests/product-import-duplicates.json",
+        "resources/requests/product-import-catalog-sku-page.json",
+        "resources/requests/product-import-create.json",
+        "resources/requests/product-import-ownership.json",
+        "resources/requests/product-import-owned-page.json",
+        "resources/requests/product-import-complete-product.json",
+        "resources/requests/product-import-media-observation.json",
+        "resources/requests/product-import-inventory-page.json",
+        "resources/requests/product-import-delete.json",
+        "resources/requests/read-product-page.json",
+        "resources/requests/read-product-detail-page.json",
+        "resources/requests/read-product-variant-page.json",
+        "resources/requests/read-product-image-page.json",
+        "resources/requests/read-product-media-page.json",
+        "resources/requests/read-default-location.json",
+        "resources/requests/match-title-prefix.json",
+        "resources/requests/filter-products-exact-handle.json",
+        "resources/requests/match-exact-handle.json",
+        "resources/requests/filter-variants-exact-sku.json",
+        "resources/requests/match-exact-sku.json",
+        "resources/requests/read-catalog-variant-page.json",
+        "resources/requests/filter-product-list.json",
+        "resources/requests/staging-product-import-connection.json"
+      ]
     }
   ]
 }
