@@ -7,6 +7,12 @@ fixtures, read only the run-owned eligible products, and clean up explicit sourc
 IDs. The source reader is also the reusable starting point for complete product
 assembly with provenance and all required variant/image pages.
 
+The provided workflow requires APIEase in both stores. Configure this package
+through Apex in the source environment; give Apex separate instructions in the
+destination environment for the importer. See [setup choices and Apex instructions](../README.md#setup-choices-and-apex-instructions)
+for the handoff and the alternative using one APIEase environment with an external
+Shopify Admin API token.
+
 The seed creates three titles beginning with the exact case-sensitive prefix
 `Staging Products` and one nonmatch. It includes a two-option, three-variant
 product, decimal prices `12.34`, `27.95`, and `0.99`, zero and nonzero inventory,

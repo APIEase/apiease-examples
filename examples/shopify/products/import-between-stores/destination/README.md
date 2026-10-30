@@ -7,6 +7,12 @@ reader's complete data object as `source`; it does not call the source store by
 itself. Both the envelope and each eligible row must identify the expected source
 shop, run ID, and marker. The per-row title must still begin with `Staging Products`.
 
+The provided workflow requires APIEase in both stores. Configure this package
+through Apex in the destination environment; give Apex separate instructions in
+the source environment for the reader. See [setup choices and Apex instructions](../README.md#setup-choices-and-apex-instructions)
+for the handoff and the alternative using one APIEase environment with an external
+Shopify Admin API token.
+
 The initial call is `{runId, source, maximum?}` through `liquidParamsEmbedded`;
 subsequent calls supply `{runId, state}` unchanged. A positive integer maximum
 defaults to three selected attempts. An exact whole handle or any nonempty exact
@@ -106,7 +112,9 @@ The connection retains `value:{"mode":"preserve"}` for `x-apiease-api-key`. On a
 new resource this defers credential entry; it neither contains nor transfers the
 verified shop's key. Configure a source APIEase key securely in the authenticated
 request editor, plus the actual source APIEase endpoint and shop header. This
-is not a Shopify access token. Pass the run input as serialized
+is not a Shopify access token. The bridge still requires APIEase and the source
+requests in the source store; it does not implement the single-environment,
+direct-Shopify alternative. Pass the run input as serialized
 `liquidParamsEmbedded` in `queryParamsEmbedded`, and validate both the outer HTTP
 and inner remote-caller response before using the reader data. Its source
 description retains historical `stageApiPath` deployment wording; the actual
