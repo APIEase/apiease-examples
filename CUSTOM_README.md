@@ -1,6 +1,6 @@
 # Custom README
 
-This repository contains APIEase examples. Its curated knowledge base packages selected explanations and resource definitions so Apex can borrow concrete patterns when building store needs. The current selection includes the [Shopify discount-code details example](examples/shopify/discount-codes/details/README.md) and the [connected product import lifecycle](examples/shopify/products/import-between-stores/README.md).
+This repository contains APIEase examples. Its curated knowledge base packages selected explanations and resource definitions for reuse when building store integrations. The current selection includes the [Shopify discount-code details example](examples/shopify/discount-codes/details/README.md) and the [connected product import lifecycle](examples/shopify/products/import-between-stores/README.md).
 
 The product-import catalogue includes all 28 active workflow handles and three supplementary references from the verified staging-to-local work. Its [source package](examples/shopify/products/import-between-stores/source/README.md) contains 26 requests; its [destination package](examples/shopify/products/import-between-stores/destination/README.md) contains 26 active requests plus the three supplementary requests. These 55 JSON files preserve the original sources byte for byte. Duplicate handles across packages are intentional: each store needs its own dependencies and several coordinators have different identity and recovery logic. Do not merge both packages into one project.
 

@@ -2,9 +2,9 @@
 
 This repository contains reusable APIEase examples and a curated examples knowledge base. Keep project-specific guidance here and in `CUSTOM_README.md`; do not change template-owned defaults or the imported product knowledge base for this workflow.
 
-## Examples as knowledge for Apex
+## Examples as reusable knowledge
 
-- Author examples so Apex can borrow concrete resource patterns when building a merchant's requirements. Explain why the resources exist, their exact invocation contracts, and the complete dependency graph; resource JSON alone is not sufficient context.
+- Author examples so readers and tools can reuse concrete resource patterns when building store integrations. Explain why the resources exist, their exact invocation contracts, and the complete dependency graph; resource JSON alone is not sufficient context.
 - Distinguish reusable mechanisms from the reference scenario's policies. Fixture creation, run tags, title prefixes, draft status, selected-attempt limits, cleanup, and inventory policy in the product-import example are not universal store requirements.
 - Preserve verified source when copying it into the catalogue. Explain the shop identities and configuration that an agent must adapt in its own project. Keep store-specific versions in separate example packages when identical handles have different behavior.
 - Include runtime limits, performance tradeoffs, and the caller's persistence/recovery responsibilities. State which behavior was observed live, which was covered by controlled tests, and which optional resources were not part of the verified path.
@@ -12,6 +12,7 @@ This repository contains reusable APIEase examples and a curated examples knowle
 
 ## Authoring example READMEs
 
+- Write for a public audience of APIEase users and developers. Describe setup steps, environment boundaries, and requirements directly without addressing or naming a particular assistant. These explanations should also give automated consumers enough context to guide users.
 - Give each README one top-level `#` title outside the knowledge base blocks.
 - When generating or updating an example, surround its subject-specific explanation with paired, standalone `<!-- apiease-kb:start -->` and `<!-- apiease-kb:end -->` comments outside fenced code. Multiple blocks are supported and appear in document order. Never nest blocks or leave them empty or unmatched.
 - Include the problem, architecture, resource roles, execution flow, inputs, response shapes, and useful requirements or limitations. Keep necessary scopes, server-side authorization, trigger configuration, and other constraints in the included explanation even if they originally appeared in setup steps or an “Important notes” section.

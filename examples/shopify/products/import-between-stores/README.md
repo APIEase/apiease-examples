@@ -4,8 +4,8 @@
 This connected example teaches how saved APIEase requests read complete products
 from one Shopify store, prevent exact-handle or exact-SKU duplicates in another,
 create draft products, observe populated images, and recover or clean up a test
-run. Apex can borrow the readers, mapping, matching, continuation, and failure
-handling patterns when implementing a merchant's requirements.
+run. Reuse the readers, mapping, matching, continuation, and failure handling
+patterns to implement your store's requirements.
 
 The reference scenario is a **test lifecycle**, not a general synchronization or
 upsert service. Its `Staging Products` title prefix, exact run tag, four fixtures,
@@ -53,28 +53,27 @@ checks, continuation shop values, cleanup inputs, and any connection headers.
 Changing only the endpoint will correctly fail the remaining identity guards.
 Confirm the installed shop and supported API version rather than assuming them.
 
-## Setup choices and Apex instructions
+## Setup choices and environment configuration
 
 ### APIEase in both stores: the provided example
 
-When helping a merchant use this example, Apex must explain the two-store
-requirement and identify which store is the source and which is the destination.
-The merchant must send Apex instructions separately in each store's APIEase
-environment. One Apex conversation does not configure both environments or grant
-access to the other store.
+Identify which store is the source and which is the destination, and configure
+each store's APIEase environment separately. If you use an assistant scoped to
+one store, give it separate setup instructions in each environment. Configuration
+and access in one environment do not carry over to the other store.
 
-- In the source environment, instruct Apex to configure the source reader and
+- In the source environment, configure the source reader and
   its dependencies. Include fixture seeding and source cleanup only when running
   the test lifecycle described here.
-- In the destination environment, instruct Apex to configure the importer and
+- In the destination environment, configure the importer and
   its dependencies, using the agreed source identity and reader response
   contract. Include destination cleanup for the test lifecycle.
 
-Apex should give the merchant a concrete handoff for the other environment:
-the source and destination shop domains, each role's required resources, and the
-reader/importer input and output contracts. The authenticated caller must still
-transfer the successful reader data and manage the continuations described below;
-separate setup conversations do not provide that runtime orchestration.
+When handing off setup for the other environment, include the source and
+destination shop domains, each role's required resources, and the reader/importer
+input and output contracts. The authenticated caller must still transfer the
+successful reader data and manage the continuations described below; configuring
+both environments does not provide that runtime orchestration.
 
 The optional [source APIEase connection](destination/README.md#supplementary-references-outside-the-active-cycle)
 calls a saved request in the source APIEase installation using a source APIEase
@@ -88,27 +87,24 @@ directly. That external store does not need APIEase installed. For example, run
 the importer in the destination environment and configure source readers there
 to call the source store directly; the reverse arrangement is also possible.
 
-The merchant must obtain a Shopify **Admin API access token for the external
-store**, issued through an app authorized for that store with the permissions
+Obtain a Shopify **Admin API access token for the external store**, issued through
+an app authorized for that store with the permissions
 needed by the selected operations. Follow Shopify's [access-token guidance](https://shopify.dev/docs/apps/build/authentication-authorization/access-tokens)
 for the app's token acquisition and renewal requirements. Configure that token
 as a Sensitive `X-Shopify-Access-Token` header on each HTTP request targeting the
 external store. Requests to the installed store can continue using
 [APIEase's automatic authentication](https://docs.apiease.com/docs/general/shopify-api/automatic-vs-overridden-shopify-access-tokens).
 The installed store's automatic token does not authenticate the external store,
-and an APIEase API key is not a Shopify Admin API access token. Apex should direct
-the merchant to enter the token securely in the request editor, not in chat or
-resource source files.
+and an APIEase API key is not a Shopify Admin API access token. Enter the token
+securely in the request editor, not in chat or resource source files.
 
 This is an alternative architecture, not a ready-to-run mode of the supplied
-JSON or a verified path of this example. Apex must adapt the requests and their
+JSON or a verified path of this example. Adapt the requests and their
 dependencies for one environment: use distinct handles for source and destination
 operations, update all Liquid call references and shop identity/provenance checks,
 and configure the external endpoints and tokens. Preserve role-specific state
 and cleanup boundaries. Do not merge the packages unchanged or assume changing
-only an endpoint supplies cross-store authentication. Apex can prepare this
-adaptation in the chosen environment; the merchant still obtains and configures
-the external store's token separately.
+only an endpoint supplies cross-store authentication.
 
 ## Operator contracts
 

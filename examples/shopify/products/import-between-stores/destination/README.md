@@ -7,9 +7,9 @@ reader's complete data object as `source`; it does not call the source store by
 itself. Both the envelope and each eligible row must identify the expected source
 shop, run ID, and marker. The per-row title must still begin with `Staging Products`.
 
-The provided workflow requires APIEase in both stores. Configure this package
-through Apex in the destination environment; give Apex separate instructions in
-the source environment for the reader. See [setup choices and Apex instructions](../README.md#setup-choices-and-apex-instructions)
+The provided workflow requires APIEase in both stores. Configure this package in
+the destination environment and configure the reader separately in the source
+environment. See [setup choices and environment configuration](../README.md#setup-choices-and-environment-configuration)
 for the handoff and the alternative using one APIEase environment with an external
 Shopify Admin API token.
 
