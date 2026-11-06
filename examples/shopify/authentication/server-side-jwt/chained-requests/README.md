@@ -1,105 +1,113 @@
-# Obtain a JWT and retrieve public product data with Chained Requests
+# Obtain a JWT and retrieve product data with Chained Requests
 
 <!-- apiease-kb:start -->
-**Status: the internal chain is deployed and verified in the local development store against the live demo provider. It is not ready for a public storefront.** Both checked-in requests have empty trigger lists. Do not add Storefront App Proxy triggers until the [platform requirements](platform-requirements.md) have been implemented and the public operation has passed verification.
+This example shows how to authenticate with an external API, use the returned JWT in a second request, and return product data to the caller. APIEase performs both requests on the server. The caller does not need to obtain or send the JWT.
 
-## Scenario and architecture
+The two saved requests have been deployed and tested against DummyJSON through APIEase's authenticated remote caller. This package currently provides the request chain; a storefront widget and verified storefront setup are not included.
 
-This example uses [DummyJSON's documented login](https://dummyjson.com/docs/auth) and [authenticated resource routes](https://dummyjson.com/docs#resources-as-auth-user). A synthetic demo account obtains an `accessToken` JWT. The next request sends it as a bearer credential to `/auth/products` and requests three product summaries. The product data is deliberately public sample content; DummyJSON also makes it available without authentication at `/products`.
-
-DummyJSON is a hosted test service, not a production identity provider. Its account credentials are public demo data. Use only its documented sample accounts here; do not send real customer, Shopify, or production credentials to it. No merchant-hosted mock backend is required.
-
-Implemented internal flow:
+## How it works
 
 ```text
-Trusted server or APIEase admin
-    -> jwt-chain-authenticate: POST https://dummyjson.com/auth/login
-    <- JWT in authentication response (server-side)
-    -> Next Request: jwt-chain-products
-       GET https://dummyjson.com/auth/products?limit=3&select=title,price
-       Authorization: Bearer <JWT from previous response>
-    <- Final product data returned to the initiating caller
+Call jwt-chain-authenticate
+    -> APIEase signs in to DummyJSON using saved demo credentials
+    <- DummyJSON returns an accessToken
+    -> APIEase runs jwt-chain-products using that token
+    <- The caller receives product data
 ```
 
-The intended storefront entry is the complete operation starting at `jwt-chain-authenticate`. It remains disabled. There is no separate token-only request, Liquid gateway, widget, token cache, or replacement integration backend in this package.
+[DummyJSON](https://dummyjson.com/docs/auth) provides public demo accounts and sample products. Its authenticated `/auth/products` route requires a bearer token, even though the product data is also publicly available at `/products`. This makes it a useful demonstration without using real customer data or production credentials.
 
-## Resources and invocation contract
-
-| Resource | Role |
+| Request | What it does |
 | --- | --- |
-| [jwt-chain-authenticate](resources/requests/jwt-chain-authenticate.json) | POST login using a sensitive saved JSON body. Its `nextRequest` field contains the handle `jwt-chain-products`. |
-| [jwt-chain-products](resources/requests/jwt-chain-products.json) | GET the fixed product endpoint using `Bearer {accessToken}` from the previous response. Requests only `title` and `price`; the provider also returns each product's `id`. |
+| [jwt-chain-authenticate](resources/requests/jwt-chain-authenticate.json) | Signs in at `https://dummyjson.com/auth/login`. Its **Next Request** is `jwt-chain-products`. |
+| [jwt-chain-products](resources/requests/jwt-chain-products.json) | Calls `https://dummyjson.com/auth/products` with `Authorization: Bearer {accessToken}` and requests three product summaries. |
 
-These are ordinary public CRUD resource definitions. `nextRequest` is the chain field; its value is a handle, not a server-owned ID. The chain uses [documented response substitution](https://docs.apiease.com/docs/requests/request-parameters/chained-requests). Neither source file contains credentials or server-owned IDs. The public CRUD API accepts the complete definitions; the tested CLI needs the [schema compatibility fix](platform-requirements.md#cli-installation-compatibility) described below.
+`{accessToken}` refers to the previous request's response. APIEase substitutes it on the server when running the second request. This is the standard [Chained Requests](https://docs.apiease.com/docs/requests/request-parameters/chained-requests) handoff.
 
-Invoke `jwt-chain-authenticate` without runtime input. Do not supply embedded body, header, path, query, or system overrides. The username, password, expiry setting, destination, headers, and product selection are saved server-side configuration. **This no-input contract is currently a caller responsibility; it is not enforced against public callers by these resources.**
+Call `jwt-chain-authenticate` without runtime parameters. The credentials, endpoints, headers, and product selection are saved in APIEase. Each execution obtains a new token; this example does not cache tokens or use the returned refresh token. The login requests a five-minute token.
 
-The saved authentication body starts with empty username and password values and is unusable until configured. Setup supplies a DummyJSON demo account and requests a five-minute token using the provider's documented `expiresInMins` field. Every execution authenticates again. The returned refresh token is unused.
+## Result
 
-## Observable results and limitations
+The successful response contains the product request's `status` and `data`. Each product has an `id`, `title`, and `price`; pagination values are also returned. The intermediate login response is not included.
 
-The successful APIEase result contains the final request's `status` and `data`. `data.products` contains up to three objects with `id`, `title`, and `price`; `data` also includes the provider's `total`, `skip`, and `limit`. Authentication responses and their cookies are absent from the tested successful result.
+```json
+{
+  "status": 200,
+  "data": {
+    "products": [
+      {"id": 1, "title": "Essence Mascara Lash Princess", "price": 9.99},
+      {"id": 2, "title": "Eyeshadow Palette with Mirror", "price": 19.99},
+      {"id": 3, "title": "Powder Canister", "price": 14.99}
+    ],
+    "total": 194,
+    "skip": 0,
+    "limit": 3
+  }
+}
+```
 
-The current runtime continues to the next request even after a failed login. Without an access token, the protected endpoint rejects the request; an unresolved-variable warning can accompany that final result. A protected-API failure returns that endpoint's status and response body. These are observations, not a sanitized public error contract. If an upstream error body contains a token, the chain currently passes it through.
+This is the response observed during verification; DummyJSON's sample catalogue can change. Check the JSON body's `status` before using `data`: the tested remote caller returned HTTP 200 even when the body reported a 401 authentication error. A failed login can also produce an unresolved-variable warning because the second request has no token to use.
 
-APIEase's legacy HTTP response wrapper can use HTTP 200 while the JSON body's `status` is 401, 403, or 502. Check the body's status when using the trusted remote caller. A successful HTTP transport alone does not establish a successful chain.
+## Storefront access
 
-Sensitive saved parameters and `RECORD_RUNTIME_HISTORY=false` do not filter upstream response bodies or lock caller overrides. The [platform requirements](platform-requirements.md) explain the missing enforcement. Customer login is not needed for this public sample product scenario.
+A **Storefront App Proxy** trigger allows a request to be called through Shopify's app proxy. It controls storefront access; it does not move execution into the browser or require the browser to receive the JWT.
+
+APIEase's [storefront documentation](https://docs.apiease.com/docs/requests/triggers/storefont-calls) describes adding this trigger to the request the storefront calls directly, while leaving requests called only by that request without a public trigger. In this example, the storefront entry would be `jwt-chain-authenticate`, which runs the complete chain.
+
+The supplied resources have no storefront triggers. The verified setup below uses APIEase admin or its authenticated remote caller. Storefront execution of this example still needs verification; do not treat the remote-call results as a completed storefront integration.
 <!-- apiease-kb:end -->
 
-## Install for trusted internal testing
+## Set up in APIEase
 
-Use Node.js 18 or later and the `apiease` CLI configured for your intended development shop and environment. **The CLI must support `nextRequest` in its request validator before using this setup script.** The CLI tested during local-store deployment rejected that field in both create and update commands. The local verification used the versioned public CRUD API instead. The setup script's unit test uses a CLI stub and does not establish compatibility with an installed CLI.
+Create the product request first so it is available when selecting the next request for authentication.
 
-With a compatible CLI, the script creates or updates only the two handles above, with empty trigger lists; an existing definition with either handle will be replaced.
+1. Create an **HTTP** request with handle `jwt-chain-products`:
+   - Method: `GET`
+   - Address: `https://dummyjson.com/auth/products`
+   - Header `Accept`: `application/json`
+   - Header `Authorization`: `Bearer {accessToken}`; mark it sensitive.
+   - Query parameter `limit`: `3`
+   - Query parameter `select`: `title,price`
+2. Create an **HTTP** request with handle `jwt-chain-authenticate`:
+   - Method: `POST`
+   - Address: `https://dummyjson.com/auth/login`
+   - Headers `Accept` and `Content-Type`: `application/json`
+   - A sensitive JSON body containing the demo account's username and password, as shown below.
+   - **Next Request**: `jwt-chain-products`
+3. On both requests, set the system parameters `REQUEST_TIMEOUT_SECONDS` to `15` and `RECORD_RUNTIME_HISTORY` to `false`, matching the resource files. Save both requests without storefront triggers.
 
-1. Set `JWT_DEMO_USERNAME` and `JWT_DEMO_PASSWORD` in your shell to a demo account from the [provider's authentication documentation](https://dummyjson.com/docs/auth). Keep these settings out of tracked files.
-2. Run from the repository root:
+Use a documented account from [DummyJSON's authentication guide](https://dummyjson.com/docs/auth) to replace the placeholders:
 
-   ```bash
-   bash examples/shopify/authentication/server-side-jwt/chained-requests/create-resources.sh your-store.myshopify.com
-   ```
-
-3. Invoke `jwt-chain-authenticate` through APIEase's authenticated admin or [trusted remote caller](https://docs.apiease.com/docs/requests/triggers/calling-requests-remotely). Keep the APIEase API key on the trusted server. No runtime parameters are required.
-
-The script creates the product dependency first, then renders the authentication body into a permission-restricted temporary file. It removes that file on exit and leaves the checked-in resource unchanged. Do not run setup with shell tracing enabled. There is deliberately no step to publish an App Proxy trigger or add a theme block.
-
-## Verification
-
-The runtime tests require an APIEase source checkout with its dependencies installed. Set `APIEASE_RUNTIME_PATH` to that checkout. This is a maintainer test dependency, not a backend merchants need to deploy.
-
-```bash
-APIEASE_RUNTIME_PATH=/absolute/path/to/apiease node --test test/server-side-jwt-chained.test.js
-APIEASE_RUNTIME_PATH=/absolute/path/to/apiease node scripts/verification/verifyJwtChain.mjs
+```json
+{
+  "username": "DEMO_USERNAME",
+  "password": "DEMO_PASSWORD",
+  "expiresInMins": 5
+}
 ```
 
-The second command exits **2** while public-storefront requirements fail. Passing characterization tests confirm the reported limitations; they do not mean the public operation is safe. Without `APIEASE_RUNTIME_PATH`, the regular tests cover source and setup only and explicitly skip the runtime group.
+Keep these values in the saved sensitive body. Do not put them in theme code. The checked-in authentication definition has empty credentials so users can configure their own demo account. Use only DummyJSON demo credentials for this example.
 
-With the documented demo credentials in the environment, run the chain against the live provider:
+### CLI setup
+
+[create-resources.sh](create-resources.sh) supplies the demo credentials from `JWT_DEMO_USERNAME` and `JWT_DEMO_PASSWORD` and creates or updates the two request handles. It requires a CLI version that accepts `nextRequest`. The tested CLI version, 0.2.7, rejects this field in both create and update commands; use the admin setup above with that version.
+
+With a compatible CLI configured for your development shop, set the two environment variables and run:
 
 ```bash
-APIEASE_RUNTIME_PATH=/absolute/path/to/apiease node scripts/verification/verifyJwtChain.mjs --live-provider
+bash examples/shopify/authentication/server-side-jwt/chained-requests/create-resources.sh your-store.myshopify.com
 ```
 
-This runs actual APIEase execution modules against DummyJSON, with injected in-memory resource storage, shop context, and usage accounting. It verifies the final data and token absence without printing tokens. It is not a deployed APIEase or Shopify App Proxy test. The controlled tests inject upstream responses, including a deliberately token-containing error; that error is not a claim about DummyJSON's observed behavior.
+The script replaces existing definitions with these handles. It keeps credentials in a permission-restricted temporary file, removes that file on exit, and leaves the source files unchanged.
 
-Source-level evidence: [controlled runtime checks](../../../../../test/evidence/jwt-chain-runtime.json) and [live provider checks](../../../../../test/evidence/jwt-chain-provider.json). These reports record resource hashes, relevant runtime source hashes, and the source checkout revision.
+## Run the example
 
-### Local-store verification
+Run `jwt-chain-authenticate` in APIEase admin, or invoke that handle through the [authenticated remote caller](https://docs.apiease.com/docs/requests/triggers/calling-requests-remotely). No runtime input is needed. For remote calls, keep the APIEase API key in your trusted server or development environment.
 
-The [local-store report](../../../../../test/evidence/jwt-chain-local-store.json) records a separate deployed test on `store-apiease-admin-local.myshopify.com`. Both resources were saved through the local APIEase service and read back to confirm their fixed endpoints, chain link, sensitive parameters, disabled runtime history, and empty trigger lists. The authentication request uses the provider's documented synthetic demo account. No production credentials were used.
+You should receive the product result shown above. Running `jwt-chain-products` alone has no previous authentication response, so the token is missing and DummyJSON rejects the call.
 
-The authenticated remote caller exercised the saved resources against live DummyJSON:
+## Verified behavior
 
-| Check | Observed result |
-| --- | --- |
-| Complete chain, without runtime input | Body status 200; three products with only `id`, `title`, and `price`, plus pagination metadata. |
-| Product helper without a previous token | Body status 401 and `UNRESOLVED_VARIABLE` warning. |
-| Invalid login password supplied as a test override | Body status 401 and `UNRESOLVED_VARIABLE` warning. |
-| Invalid bearer token supplied as a test override | Body status 401. |
-| Complete chain after the failure tests | Body status 200 with the same three-product response; overrides did not persist. |
-| Remote call without an APIEase API key | Error response; no product data. |
+The [local-store verification report](../../../../../test/evidence/jwt-chain-local-store.json) records successful execution with three product summaries, rejection of missing or invalid tokens and invalid login credentials, and successful execution again after those failure tests. No token or credential data was detected in the inspected response bodies, headers, or cookies.
 
-No token or credential data was detected in the inspected response bodies, headers, or cookies. The negative calls used temporary runtime inputs, without changing the saved credentials or chain. These ordinary live failures do not establish sanitization of arbitrary upstream error bodies; the controlled error-canary test still demonstrates that gap. The remote route used HTTP 200 for the tested success and error responses, so consumers must inspect the JSON body.
-
-Direct storefront probes for both handles redirected to Shopify's `/password` page before reaching the app proxy. Therefore this run verifies deployed APIEase execution, not live Shopify App Proxy rejection, signature handling, or theme rendering. No public trigger or theme block was installed. The CLI compatibility problem and public-storefront requirements remain open.
+The live tests used APIEase's authenticated remote caller. Storefront attempts reached Shopify's password page, so Shopify App Proxy execution and theme rendering were not verified. These results apply to the demonstrated DummyJSON responses; they are not a guarantee about the responses of other APIs.

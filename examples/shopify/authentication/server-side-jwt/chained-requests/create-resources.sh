@@ -39,4 +39,4 @@ apiease create request --shop-domain "$shop_domain" --file "$script_dir/resource
 apiease create request --shop-domain "$shop_domain" --file "$temporary_directory/authenticate.json"
 
 echo "Created the internal JWT chain. No storefront trigger or theme block was installed."
-echo "Public storefront activation is blocked; see platform-requirements.md."
+echo "Run jwt-chain-authenticate in APIEase admin to retrieve the sample products. See README.md for usage."
