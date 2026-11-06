@@ -1,0 +1,32 @@
+{
+  "checkedAt": "2026-11-06T22:09:07.410Z",
+  "runtimeCommit": "b5a284e00f46e50bdfe05727e7c78ea10c2f5598",
+  "runtimeTrackedChanges": true,
+  "mode": "APIEase source runtime with live DummyJSON",
+  "liveShopifyOrDeployedAPIEaseVerified": false,
+  "resourceSha256": {
+    "jwt-chain-authenticate": "f94f692620c21af650d46be51ab1eb8a6aeb2e7f8320af5b671cc82dabcbb194",
+    "jwt-chain-products": "fd5f5d3b7dbca72caf0e3e2136e1cfb9cc93af3c3bc765eb7bb2095c25b2ff7d"
+  },
+  "runtimeSourceSha256": {
+    "backend/integration/caller.js": "bc2f6e9ca4780752bef565ef25affedb5a325a640bc8d2802691fdb607f00214",
+    "backend/integration/callDispatcher.js": "a910ee8de81ec4e26ecce6d771e188dcbad2a7c9b2af31966d3743053ad294db",
+    "backend/integration/parameterResolver.js": "100156aef3492440e317f58697cafd677f32b1db41e4a5be0e15e4e55f4a61c3",
+    "backend/service/caller/nextApiEaseCallParameterService.js": "5be901fa4c3bacad4d6d3b5b53e40ee5e0e2574c242f388bdcc14bbbbd0b2ce5",
+    "backend/service/caller/nextRequestService.js": "3028ff1e3fb93fe761e7a7bdb446c388c0dcfb2a7c6c419b5d9ed29374daaeeb",
+    "backend/service/caller/apiEaseCallValidator.js": "e7db22c8af4094d06e85543b80be8de81cc0f01cac4f65eda8a4febd0389fafb",
+    "backend/service/caller/callHistoryService.js": "ba330218b335be8d6a228e9cd54395075a30532d158a6f09e93f29bb30a27ae4",
+    "backend/service/caller/responseOverrides.js": "c488cd144affd0a9ab1b6bea1567ce899795af37a56ed14407ef06ec33377542",
+    "backend/service/caller/ProtectedValueRuntimeService.js": "324aabaaaef51fb0cb04e1e113cca0952a6c1071e62d592ec13a02adb199f7b8",
+    "backend/service/trigger/storefront/storefrontAppProxyExecutionPolicyService.js": "844deea457cbd2fd67f5ab9858dd5dbcd9f3fead46c5c232a976f11386a3cfc2",
+    "backend/service/http/httpCallService.js": "5cc5c075c7b530e7fffd352df3c78ce19a5d5eb3e59f895a0c9e8003aa81b729",
+    "app/service/requests/requestExecutionHttpResponse.js": "e8dcb383029626a7332e2bf5a845958c62377bbcb1aca124b84db4a778e41b80"
+  },
+  "checks": {
+    "finalDataOnlyOnSuccess": true,
+    "productCount": 3,
+    "missingTokenRejected": true,
+    "invalidTokenRejected": true
+  },
+  "storefrontReady": false
+}
