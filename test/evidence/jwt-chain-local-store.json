@@ -1,0 +1,217 @@
+{
+  "checkedAt": "2026-11-06T22:41:35.026Z",
+  "mode": "Deployed local APIEase with live DummyJSON",
+  "environment": "local",
+  "shopDomain": "store-apiease-admin-local.myshopify.com",
+  "deploymentMethod": "Versioned public CRUD API; CLI create and update reject nextRequest locally",
+  "resourceSha256": {
+    "jwt-chain-products": "fd5f5d3b7dbca72caf0e3e2136e1cfb9cc93af3c3bc765eb7bb2095c25b2ff7d",
+    "jwt-chain-authenticate": "f94f692620c21af650d46be51ab1eb8a6aeb2e7f8320af5b671cc82dabcbb194"
+  },
+  "resources": [
+    {
+      "handle": "jwt-chain-products",
+      "readBackVerified": true,
+      "triggers": [],
+      "nextRequest": null,
+      "sensitiveParameterVerified": true,
+      "runtimeHistoryDisabled": true
+    },
+    {
+      "handle": "jwt-chain-authenticate",
+      "readBackVerified": true,
+      "triggers": [],
+      "nextRequest": "jwt-chain-products",
+      "sensitiveParameterVerified": true,
+      "runtimeHistoryDisabled": true
+    }
+  ],
+  "checks": {
+    "successfulChain": {
+      "httpStatus": 200,
+      "resultStatus": 200,
+      "contentType": "application/json",
+      "redirectPath": null,
+      "tokenCookieDetected": false,
+      "credentialHeaderDetected": false,
+      "bodyKeys": [
+        "data",
+        "status"
+      ],
+      "warningCodes": [],
+      "productCount": 3,
+      "tokenOrCredentialDetected": false,
+      "productFields": [
+        "id",
+        "price",
+        "title"
+      ],
+      "publicData": {
+        "products": [
+          {
+            "id": 1,
+            "title": "Essence Mascara Lash Princess",
+            "price": 9.99
+          },
+          {
+            "id": 2,
+            "title": "Eyeshadow Palette with Mirror",
+            "price": 19.99
+          },
+          {
+            "id": 3,
+            "title": "Powder Canister",
+            "price": 14.99
+          }
+        ],
+        "total": 194,
+        "skip": 0,
+        "limit": 3
+      }
+    },
+    "helperWithoutToken": {
+      "httpStatus": 200,
+      "resultStatus": 401,
+      "contentType": "application/json",
+      "redirectPath": null,
+      "tokenCookieDetected": false,
+      "credentialHeaderDetected": false,
+      "bodyKeys": [
+        "data",
+        "status",
+        "warnings"
+      ],
+      "warningCodes": [
+        "UNRESOLVED_VARIABLE"
+      ],
+      "productCount": null,
+      "tokenOrCredentialDetected": false
+    },
+    "invalidLogin": {
+      "httpStatus": 200,
+      "resultStatus": 401,
+      "contentType": "application/json",
+      "redirectPath": null,
+      "tokenCookieDetected": false,
+      "credentialHeaderDetected": false,
+      "bodyKeys": [
+        "data",
+        "status",
+        "warnings"
+      ],
+      "warningCodes": [
+        "UNRESOLVED_VARIABLE"
+      ],
+      "productCount": null,
+      "tokenOrCredentialDetected": false
+    },
+    "invalidProtectedToken": {
+      "httpStatus": 200,
+      "resultStatus": 401,
+      "contentType": "application/json",
+      "redirectPath": null,
+      "tokenCookieDetected": false,
+      "credentialHeaderDetected": false,
+      "bodyKeys": [
+        "data",
+        "status"
+      ],
+      "warningCodes": [],
+      "productCount": null,
+      "tokenOrCredentialDetected": false
+    },
+    "successfulChainAfterFailures": {
+      "httpStatus": 200,
+      "resultStatus": 200,
+      "contentType": "application/json",
+      "redirectPath": null,
+      "tokenCookieDetected": false,
+      "credentialHeaderDetected": false,
+      "bodyKeys": [
+        "data",
+        "status"
+      ],
+      "warningCodes": [],
+      "productCount": 3,
+      "tokenOrCredentialDetected": false,
+      "productFields": [
+        "id",
+        "price",
+        "title"
+      ],
+      "publicData": {
+        "products": [
+          {
+            "id": 1,
+            "title": "Essence Mascara Lash Princess",
+            "price": 9.99
+          },
+          {
+            "id": 2,
+            "title": "Eyeshadow Palette with Mirror",
+            "price": 19.99
+          },
+          {
+            "id": 3,
+            "title": "Powder Canister",
+            "price": 14.99
+          }
+        ],
+        "total": 194,
+        "skip": 0,
+        "limit": 3
+      }
+    },
+    "storefront-jwt-chain-products": {
+      "httpStatus": 302,
+      "resultStatus": null,
+      "contentType": "text/html; charset=utf-8",
+      "redirectPath": "/password",
+      "tokenCookieDetected": false,
+      "credentialHeaderDetected": false,
+      "bodyKeys": [],
+      "warningCodes": [],
+      "productCount": null,
+      "tokenOrCredentialDetected": false
+    },
+    "storefront-jwt-chain-authenticate": {
+      "httpStatus": 302,
+      "resultStatus": null,
+      "contentType": "text/html; charset=utf-8",
+      "redirectPath": "/password",
+      "tokenCookieDetected": false,
+      "credentialHeaderDetected": false,
+      "bodyKeys": [],
+      "warningCodes": [],
+      "productCount": null,
+      "tokenOrCredentialDetected": false
+    },
+    "remoteWithoutApiKey": {
+      "httpStatus": 200,
+      "resultStatus": null,
+      "contentType": "application/json",
+      "redirectPath": null,
+      "tokenCookieDetected": false,
+      "credentialHeaderDetected": false,
+      "bodyKeys": [
+        "error"
+      ],
+      "warningCodes": [],
+      "productCount": null,
+      "tokenOrCredentialDetected": false
+    }
+  },
+  "storefrontReady": false,
+  "cliVersion": "0.2.7",
+  "cliCommit": "9761a24c7030fe196045871152bfcc0ade1b040b",
+  "cliValidatorSha256": "e49d13009f2f6284f7bc6180269abe373f145615ba801558b79625df56c6d882",
+  "liveDeployedAPIEaseVerified": true,
+  "shopifyAppProxyRuntimeVerified": false,
+  "themeRenderingVerified": false,
+  "notes": [
+    "Only this two-request example was applied.",
+    "Successful and negative remote results inspected in memory; tokens and credentials excluded from this report.",
+    "No App Proxy trigger or theme widget was installed.",
+    "API success does not resolve the controlled-test public-storefront requirements."
+  ]
+}

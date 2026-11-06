@@ -1,7 +1,7 @@
 # Obtain a JWT and retrieve public product data with Chained Requests
 
 <!-- apiease-kb:start -->
-**Status: the internal chain works in controlled runtime tests and against the live demo provider. It is not ready for a public storefront.** Both checked-in requests have empty trigger lists. Do not add Storefront App Proxy triggers until the [platform requirements](platform-requirements.md) have been implemented and the public operation has passed verification.
+**Status: the internal chain is deployed and verified in the local development store against the live demo provider. It is not ready for a public storefront.** Both checked-in requests have empty trigger lists. Do not add Storefront App Proxy triggers until the [platform requirements](platform-requirements.md) have been implemented and the public operation has passed verification.
 
 ## Scenario and architecture
 
@@ -30,7 +30,7 @@ The intended storefront entry is the complete operation starting at `jwt-chain-a
 | [jwt-chain-authenticate](resources/requests/jwt-chain-authenticate.json) | POST login using a sensitive saved JSON body. Its `nextRequest` field contains the handle `jwt-chain-products`. |
 | [jwt-chain-products](resources/requests/jwt-chain-products.json) | GET the fixed product endpoint using `Bearer {accessToken}` from the previous response. Requests only `title` and `price`; the provider also returns each product's `id`. |
 
-These are ordinary resource definitions for `apiease create request`. `nextRequest` is the public CRUD field; its value is a handle, not a server-owned ID. The chain uses [documented response substitution](https://docs.apiease.com/docs/requests/request-parameters/chained-requests). Neither source file contains credentials or server-owned IDs.
+These are ordinary public CRUD resource definitions. `nextRequest` is the chain field; its value is a handle, not a server-owned ID. The chain uses [documented response substitution](https://docs.apiease.com/docs/requests/request-parameters/chained-requests). Neither source file contains credentials or server-owned IDs. The public CRUD API accepts the complete definitions; the tested CLI needs the [schema compatibility fix](platform-requirements.md#cli-installation-compatibility) described below.
 
 Invoke `jwt-chain-authenticate` without runtime input. Do not supply embedded body, header, path, query, or system overrides. The username, password, expiry setting, destination, headers, and product selection are saved server-side configuration. **This no-input contract is currently a caller responsibility; it is not enforced against public callers by these resources.**
 
@@ -49,7 +49,9 @@ Sensitive saved parameters and `RECORD_RUNTIME_HISTORY=false` do not filter upst
 
 ## Install for trusted internal testing
 
-Use Node.js 18 or later and the `apiease` CLI configured for your intended development shop and environment. The setup script creates or updates only the two handles above, with empty trigger lists; an existing definition with either handle will be replaced.
+Use Node.js 18 or later and the `apiease` CLI configured for your intended development shop and environment. **The CLI must support `nextRequest` in its request validator before using this setup script.** The CLI tested during local-store deployment rejected that field in both create and update commands. The local verification used the versioned public CRUD API instead. The setup script's unit test uses a CLI stub and does not establish compatibility with an installed CLI.
+
+With a compatible CLI, the script creates or updates only the two handles above, with empty trigger lists; an existing definition with either handle will be replaced.
 
 1. Set `JWT_DEMO_USERNAME` and `JWT_DEMO_PASSWORD` in your shell to a demo account from the [provider's authentication documentation](https://dummyjson.com/docs/auth). Keep these settings out of tracked files.
 2. Run from the repository root:
@@ -81,4 +83,23 @@ APIEASE_RUNTIME_PATH=/absolute/path/to/apiease node scripts/verification/verifyJ
 
 This runs actual APIEase execution modules against DummyJSON, with injected in-memory resource storage, shop context, and usage accounting. It verifies the final data and token absence without printing tokens. It is not a deployed APIEase or Shopify App Proxy test. The controlled tests inject upstream responses, including a deliberately token-containing error; that error is not a claim about DummyJSON's observed behavior.
 
-Evidence: [controlled runtime checks](../../../../../test/evidence/jwt-chain-runtime.json) and [live provider checks](../../../../../test/evidence/jwt-chain-provider.json). Reports record resource hashes, relevant runtime source hashes, and the source checkout revision. No deployed resource creation, theme rendering, or Shopify signature verification has been verified. The configured development APIEase endpoint could not be reached during this task.
+Source-level evidence: [controlled runtime checks](../../../../../test/evidence/jwt-chain-runtime.json) and [live provider checks](../../../../../test/evidence/jwt-chain-provider.json). These reports record resource hashes, relevant runtime source hashes, and the source checkout revision.
+
+### Local-store verification
+
+The [local-store report](../../../../../test/evidence/jwt-chain-local-store.json) records a separate deployed test on `store-apiease-admin-local.myshopify.com`. Both resources were saved through the local APIEase service and read back to confirm their fixed endpoints, chain link, sensitive parameters, disabled runtime history, and empty trigger lists. The authentication request uses the provider's documented synthetic demo account. No production credentials were used.
+
+The authenticated remote caller exercised the saved resources against live DummyJSON:
+
+| Check | Observed result |
+| --- | --- |
+| Complete chain, without runtime input | Body status 200; three products with only `id`, `title`, and `price`, plus pagination metadata. |
+| Product helper without a previous token | Body status 401 and `UNRESOLVED_VARIABLE` warning. |
+| Invalid login password supplied as a test override | Body status 401 and `UNRESOLVED_VARIABLE` warning. |
+| Invalid bearer token supplied as a test override | Body status 401. |
+| Complete chain after the failure tests | Body status 200 with the same three-product response; overrides did not persist. |
+| Remote call without an APIEase API key | Error response; no product data. |
+
+No token or credential data was detected in the inspected response bodies, headers, or cookies. The negative calls used temporary runtime inputs, without changing the saved credentials or chain. These ordinary live failures do not establish sanitization of arbitrary upstream error bodies; the controlled error-canary test still demonstrates that gap. The remote route used HTTP 200 for the tested success and error responses, so consumers must inspect the JSON body.
+
+Direct storefront probes for both handles redirected to Shopify's `/password` page before reaching the app proxy. Therefore this run verifies deployed APIEase execution, not live Shopify App Proxy rejection, signature handling, or theme rendering. No public trigger or theme block was installed. The CLI compatibility problem and public-storefront requirements remain open.
