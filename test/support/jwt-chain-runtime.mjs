@@ -36,11 +36,12 @@ export async function validateDefinitions(runtimePath) {
 // Uses the actual APIEase caller, parameter resolver, chain continuation, trigger
 // policy, response overrides and HTTP response builder. Persistence, Shopify
 // sessions, billing, and upstream responses are injected; no deployed shop is used.
-export async function createRuntime({runtimePath, publicHandles = [], upstream, credentials = fixtureSecrets} = {}) {
+export async function createRuntime({runtimePath, publicHandles = [], upstream, credentials = fixtureSecrets, definitions} = {}) {
   if (!runtimePath) throw new Error('APIEASE_RUNTIME_PATH must point to an APIEase source checkout with dependencies installed.');
   const load = async relative => import(pathToFileURL(path.resolve(runtimePath, relative)).href);
   const [Caller, ParameterResolver, CallDispatcher, NextParameters, NextRequest,
-    Validator, Policy, CallHistory, HttpService, httpResponse, constants] = await Promise.all([
+    Validator, Policy, CallHistory, HttpService, httpResponse, constants,
+    LiquidWrapper, LiquidService, LiquidLimit, LiquidController, LiquidDispatcher, CallerService] = await Promise.all([
     'backend/integration/caller.js',
     'backend/integration/parameterResolver.js',
     'backend/integration/callDispatcher.js',
@@ -52,9 +53,15 @@ export async function createRuntime({runtimePath, publicHandles = [], upstream, 
     'backend/service/http/httpCallService.js',
     'app/service/requests/requestExecutionHttpResponse.js',
     'backend/common/constants.js',
+    'backend/service/liquid/liquidWrapper.js',
+    'backend/service/liquid/liquidService.js',
+    'backend/service/liquid/liquidLimitService.js',
+    'backend/service/liquid/liquidCallController.js',
+    'backend/service/liquid/liquidCallDispatcher.js',
+    'backend/service/caller/callerService.js',
   ].map(load));
 
-  const definitions = await readDefinitions();
+  definitions = structuredClone(definitions || await readDefinitions());
   definitions[0].parameters.find(parameter => parameter.type === 'body').value = JSON.stringify({
     username: credentials.username, password: credentials.password, expiresInMins: 5,
   });
@@ -82,7 +89,7 @@ export async function createRuntime({runtimePath, publicHandles = [], upstream, 
   const calls = [];
   const service = new HttpService.default();
   const dispatchHttpCall = async (_admin, parameters, httpParameters) => {
-    calls.push({handle: parameters.requestToCall.value.handle, parameters: structuredClone(httpParameters)});
+    calls.push({handle: parameters.requestToCall.value.handle, route: parameters.route, parameters: structuredClone(httpParameters)});
     if (upstream) {
       const response = await upstream(httpParameters, calls.length);
       return service.buildConciseResponse(response, httpParameters);
@@ -90,9 +97,13 @@ export async function createRuntime({runtimePath, publicHandles = [], upstream, 
     return service.executeHttpCall(httpParameters);
   };
   const registration = {async registerCall() {}};
-  const dispatcher = new CallDispatcher.default({dispatchHttpCall}, null, null, null, resolver, registration);
+  const liquidLimits = new LiquidLimit.default(1000000, 100000, 2000000);
+  const liquid = new LiquidService.default(new LiquidWrapper.default(1000).createSafeLiquidEngine(), liquidLimits);
+  const liquidDispatcher = new LiquidDispatcher.default(new LiquidController.default(liquid));
+  const dispatcher = new CallDispatcher.default({dispatchHttpCall}, null, liquidDispatcher, null, resolver, registration);
   const caller = new Caller.default(null, dispatcher, registration, resolver, setter, validator, getter,
     new CallHistory.default(), new NextParameters.default(new NextRequest.default(), getter));
+  liquid.registerLiquidTag(new CallerService.default(caller), liquidLimits);
 
   return {
     calls,

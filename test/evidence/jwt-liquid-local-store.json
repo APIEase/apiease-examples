@@ -1,0 +1,120 @@
+{
+  "checkedAt": "2026-11-06T23:14:42.620Z",
+  "environment": "local",
+  "shopDomain": "store-apiease-admin-local.myshopify.com",
+  "mode": "Deployed APIEase Liquid requests with live DummyJSON",
+  "resourceSha256": {
+    "jwt-liquid-authenticate": "3386a2d04aa75dba043038b52d6bef1b1921c51c7a2b8d7c6bdebe7a2f91a14b",
+    "jwt-liquid-products": "bac41551058be9f7c0105935884883816899d2c47ccc321e7cd27d33c3f76319",
+    "jwt-liquid-product-summaries": "472bdd70ec7b88bf080e5e4d156fe42e7e2d251e4aa7fb302158ef3253383695"
+  },
+  "resources": [
+    {
+      "handle": "jwt-liquid-authenticate",
+      "readBackVerified": true,
+      "triggers": []
+    },
+    {
+      "handle": "jwt-liquid-products",
+      "readBackVerified": true,
+      "triggers": []
+    },
+    {
+      "handle": "jwt-liquid-product-summaries",
+      "readBackVerified": true,
+      "triggers": []
+    }
+  ],
+  "checks": {
+    "success": {
+      "httpStatus": 200,
+      "resultStatus": 200,
+      "ok": true,
+      "code": null,
+      "productCount": 3,
+      "tokenOrCredentialDetected": false,
+      "responseHasCookie": false,
+      "warningCodes": []
+    },
+    "callerOverridesIgnored": {
+      "httpStatus": 200,
+      "resultStatus": 200,
+      "ok": true,
+      "code": null,
+      "productCount": 3,
+      "tokenOrCredentialDetected": false,
+      "responseHasCookie": false,
+      "warningCodes": []
+    },
+    "invalidSavedCredentials": {
+      "httpStatus": 200,
+      "resultStatus": 200,
+      "ok": false,
+      "code": "AUTHENTICATION_FAILED",
+      "productCount": null,
+      "tokenOrCredentialDetected": false,
+      "responseHasCookie": false,
+      "warningCodes": []
+    },
+    "protectedProductNotFound": {
+      "httpStatus": 200,
+      "resultStatus": 200,
+      "ok": false,
+      "code": "PRODUCTS_UNAVAILABLE",
+      "productCount": null,
+      "tokenOrCredentialDetected": false,
+      "responseHasCookie": false,
+      "warningCodes": []
+    },
+    "successAfterRestoration": {
+      "httpStatus": 200,
+      "resultStatus": 200,
+      "ok": true,
+      "code": null,
+      "productCount": 3,
+      "tokenOrCredentialDetected": false,
+      "responseHasCookie": false,
+      "warningCodes": []
+    }
+  },
+  "publicTriggersEnabled": false,
+  "storefrontReady": false,
+  "themeRenderingVerified": false,
+  "widgetInstalled": true,
+  "publicData": {
+    "ok": true,
+    "products": [
+      {
+        "id": 1,
+        "title": "Essence Mascara Lash Princess",
+        "price": 9.99
+      },
+      {
+        "id": 2,
+        "title": "Eyeshadow Palette with Mirror",
+        "price": 19.99
+      },
+      {
+        "id": 3,
+        "title": "Powder Canister",
+        "price": 14.99
+      }
+    ]
+  },
+  "temporaryTestChangesRestored": true,
+  "liveDeployedAPIEaseVerified": true,
+  "notes": [
+    "Only the Liquid example resources were installed.",
+    "Sensitive values and upstream authentication responses are excluded from this report.",
+    "No storefront trigger or theme placement was enabled."
+  ],
+  "widgetSha256": "73a384232b9ce92ca84e041e95a953f0272a1acd8c36bf2a9b495a111301f4ad",
+  "browserPreview": {
+    "verified": true,
+    "mode": "Local HTML using captured public product data; no API credentials",
+    "successProductCount": 3,
+    "sanitizedErrorDisplayed": true,
+    "retryButtonEnabledAfterError": true,
+    "shopifyThemeVerified": false
+  }
+}

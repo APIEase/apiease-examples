@@ -24,6 +24,8 @@ Call jwt-chain-authenticate
 
 `{accessToken}` refers to the previous request's response. APIEase substitutes it on the server when running the second request. This is the standard [Chained Requests](https://docs.apiease.com/docs/requests/request-parameters/chained-requests) handoff.
 
+Leave **Sensitive** off for this Authorization header: its saved value is the visible template `Bearer {accessToken}`, and the token is supplied only at runtime. Marking the template sensitive would encrypt and mask the placeholder without protecting an additional saved credential. Keep the authentication body sensitive because it stores the username and password.
+
 Call `jwt-chain-authenticate` without runtime parameters. The credentials, endpoints, headers, and product selection are saved in APIEase. Each execution obtains a new token; this example does not cache tokens or use the returned refresh token. The login requests a five-minute token.
 
 ## Result
@@ -65,7 +67,7 @@ Create the product request first so it is available when selecting the next requ
    - Method: `GET`
    - Address: `https://dummyjson.com/auth/products`
    - Header `Accept`: `application/json`
-   - Header `Authorization`: `Bearer {accessToken}`; mark it sensitive.
+   - Header `Authorization`: `Bearer {accessToken}`; leave **Sensitive** off.
    - Query parameter `limit`: `3`
    - Query parameter `select`: `title,price`
 2. Create an **HTTP** request with handle `jwt-chain-authenticate`:

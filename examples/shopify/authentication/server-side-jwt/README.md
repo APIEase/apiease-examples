@@ -3,9 +3,16 @@
 <!-- apiease-kb:start -->
 Keep authentication and the protected API call on the server. The caller receives the data it needs without obtaining the service's JWT.
 
-The [Chained Requests example](chained-requests/README.md) demonstrates this with DummyJSON: one saved request signs in, then a second uses the returned token to retrieve product summaries. The chain has been deployed and tested through APIEase's authenticated remote caller. Its README covers setup, invocation, and the returned data. A verified storefront integration is not included yet.
+Two examples demonstrate this with the same DummyJSON demo accounts and product catalogue:
 
-The Liquid orchestration and persisted-token caching alternatives described in the community answer are not implemented here yet.
+| Example | Approach |
+| --- | --- |
+| [Chained Requests](chained-requests/README.md) | One request signs in, then **Next Request** passes the returned token to the product request. |
+| [Liquid Request](liquid-request/README.md) | Liquid calls the two helpers explicitly, stops on authentication failure, and renders selected fields or a fixed error message. |
+
+Both examples have been deployed and tested through APIEase's authenticated remote caller. Their READMEs cover setup, invocation, returned data, and the supported execution scope. A verified public storefront integration is not included yet.
+
+The third alternative, Liquid orchestration with persisted-token caching, is not implemented here yet.
 <!-- apiease-kb:end -->
 
 [answer.md](answer.md) is the community response draft. This package is not yet enrolled in the curated examples knowledge base.
