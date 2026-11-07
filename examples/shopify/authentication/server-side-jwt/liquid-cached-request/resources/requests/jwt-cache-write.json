@@ -1,0 +1,23 @@
+{
+  "handle": "jwt-cache-write",
+  "name": "JWT Cache Write",
+  "type": "system",
+  "parameters": [
+    {
+      "type": "system",
+      "name": "function",
+      "value": "setVariables"
+    },
+    {
+      "type": "system",
+      "name": "arguments",
+      "value": "[{\"handle\":\"jwt-cache-dummyjson\",\"value\":\"\",\"sensitive\":true}]"
+    },
+    {
+      "type": "system",
+      "name": "RECORD_RUNTIME_HISTORY",
+      "value": "false"
+    }
+  ],
+  "triggers": []
+}

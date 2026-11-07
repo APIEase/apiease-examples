@@ -1,0 +1,35 @@
+{
+  "handle": "jwt-cache-authenticate",
+  "name": "JWT Cached Authenticate",
+  "type": "http",
+  "method": "POST",
+  "address": "https://dummyjson.com/auth/login",
+  "parameters": [
+    {
+      "type": "header",
+      "name": "Accept",
+      "value": "application/json"
+    },
+    {
+      "type": "header",
+      "name": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "type": "body",
+      "value": "{\"username\":\"\",\"password\":\"\",\"expiresInMins\":5}",
+      "sensitive": true
+    },
+    {
+      "type": "system",
+      "name": "REQUEST_TIMEOUT_SECONDS",
+      "value": "15"
+    },
+    {
+      "type": "system",
+      "name": "RECORD_RUNTIME_HISTORY",
+      "value": "false"
+    }
+  ],
+  "triggers": []
+}

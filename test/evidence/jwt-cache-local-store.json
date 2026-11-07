@@ -1,0 +1,86 @@
+{
+  "checkedAt": "2026-11-07T00:15:17.036Z",
+  "environment": "local",
+  "shopDomain": "store-apiease-admin-local.myshopify.com",
+  "mode": "Deployed APIEase Liquid and System requests with live DummyJSON",
+  "resourceSha256": {
+    "jwt-cache-authenticate": "fc302b39b024872b991bcecba463efad1581db06a6eb33375970c396b758c058",
+    "jwt-cache-products": "f91433a9bed77327d73e53950f7224608aced7be1a6f6c096532ea0d111b50b5",
+    "jwt-cache-read": "3d138bc067e9f2b27afa3127eda7090a9b94b1fbdc1828f72dc8ffcfa2637049",
+    "jwt-cache-write": "bf2e2d4a343057f049086f7cbfb31108d2c18249248f2352d1894f88567e3d85",
+    "jwt-cache-product-summaries": "bc6bb4582d642981335c49fa6dc2377fab9f2776d7ca7a2f337a6cecc6e02d80",
+    "jwt-cache-dummyjson": "56bcf974893109fc27de63a8c65bf41e4d391291e090f7cbacaaafc33f9e79d5"
+  },
+  "checks": {
+    "coldCachePopulated": {
+      "passed": true,
+      "productCount": 3,
+      "lifetimeSeconds": 300
+    },
+    "warmCacheReusedWithLoginDisabled": {
+      "passed": true
+    },
+    "expiredCacheRequiresAuthentication": {
+      "passed": true
+    },
+    "expiredCacheReplaced": {
+      "passed": true
+    },
+    "invalidCachedTokenRenewedAndRetried": {
+      "passed": true
+    },
+    "malformedCacheReplaced": {
+      "passed": true
+    },
+    "safetyMarginRenews": {
+      "passed": true
+    },
+    "productNotFoundDoesNotRenew": {
+      "passed": true
+    },
+    "ordinaryOverridesIgnored": {
+      "passed": true
+    },
+    "earlierTokenValidAfterAnotherLogin": {
+      "passed": true
+    },
+    "concurrentColdCalls": {
+      "passed": true,
+      "successfulCalls": 3
+    },
+    "successAfterRestoration": {
+      "passed": true
+    }
+  },
+  "publicTriggersEnabled": false,
+  "storefrontReady": false,
+  "publicData": {
+    "ok": true,
+    "products": [
+      {
+        "id": 1,
+        "title": "Essence Mascara Lash Princess",
+        "price": 9.99
+      },
+      {
+        "id": 2,
+        "title": "Eyeshadow Palette with Mirror",
+        "price": 19.99
+      },
+      {
+        "id": 3,
+        "title": "Powder Canister",
+        "price": 14.99
+      }
+    ]
+  },
+  "temporaryTestChangesRestored": true,
+  "liveDeployedAPIEaseVerified": true,
+  "cacheVariableSensitive": true,
+  "finalResponsesCheckedForTokensAndCredentials": true,
+  "notes": [
+    "No storefront trigger or theme placement was enabled.",
+    "Cache reads and login responses were inspected in memory only; no credentials or tokens are included.",
+    "Concurrent successes do not establish single-login coordination; duplicate authentication is allowed."
+  ]
+}

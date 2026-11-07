@@ -1,0 +1,7 @@
+{
+  "handle": "jwt-cache-dummyjson",
+  "name": "JWT Cache DummyJSON",
+  "description": "Shared demo account token and expiry for the cached product example. Reset when changing the account or permissions.",
+  "value": "",
+  "sensitive": true
+}

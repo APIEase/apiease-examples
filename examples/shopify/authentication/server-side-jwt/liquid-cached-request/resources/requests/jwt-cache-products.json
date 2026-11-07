@@ -1,0 +1,41 @@
+{
+  "handle": "jwt-cache-products",
+  "name": "JWT Cached Products",
+  "type": "http",
+  "method": "GET",
+  "address": "https://dummyjson.com/auth/products",
+  "parameters": [
+    {
+      "type": "header",
+      "name": "Accept",
+      "value": "application/json"
+    },
+    {
+      "type": "header",
+      "name": "Authorization",
+      "value": "Bearer ",
+      "sensitive": true
+    },
+    {
+      "type": "query",
+      "name": "limit",
+      "value": "3"
+    },
+    {
+      "type": "query",
+      "name": "select",
+      "value": "title,price"
+    },
+    {
+      "type": "system",
+      "name": "REQUEST_TIMEOUT_SECONDS",
+      "value": "15"
+    },
+    {
+      "type": "system",
+      "name": "RECORD_RUNTIME_HISTORY",
+      "value": "false"
+    }
+  ],
+  "triggers": []
+}

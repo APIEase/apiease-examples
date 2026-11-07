@@ -36,12 +36,14 @@ export async function validateDefinitions(runtimePath) {
 // Uses the actual APIEase caller, parameter resolver, chain continuation, trigger
 // policy, response overrides and HTTP response builder. Persistence, Shopify
 // sessions, billing, and upstream responses are injected; no deployed shop is used.
-export async function createRuntime({runtimePath, publicHandles = [], upstream, credentials = fixtureSecrets, definitions} = {}) {
+export async function createRuntime({runtimePath, publicHandles = [], upstream, credentials = fixtureSecrets, definitions,
+  shopVariablesService, shopDomain = 'fixture.myshopify.com', nowSeconds} = {}) {
   if (!runtimePath) throw new Error('APIEASE_RUNTIME_PATH must point to an APIEase source checkout with dependencies installed.');
   const load = async relative => import(pathToFileURL(path.resolve(runtimePath, relative)).href);
   const [Caller, ParameterResolver, CallDispatcher, NextParameters, NextRequest,
     Validator, Policy, CallHistory, HttpService, httpResponse, constants,
-    LiquidWrapper, LiquidService, LiquidLimit, LiquidController, LiquidDispatcher, CallerService] = await Promise.all([
+    LiquidWrapper, LiquidService, LiquidLimit, LiquidController, LiquidDispatcher, CallerService,
+    SystemController, SystemDispatcher] = await Promise.all([
     'backend/integration/caller.js',
     'backend/integration/parameterResolver.js',
     'backend/integration/callDispatcher.js',
@@ -59,6 +61,8 @@ export async function createRuntime({runtimePath, publicHandles = [], upstream, 
     'backend/service/liquid/liquidCallController.js',
     'backend/service/liquid/liquidCallDispatcher.js',
     'backend/service/caller/callerService.js',
+    'backend/service/system/systemCallController.js',
+    'backend/service/system/systemCallDispatcher.js',
   ].map(load));
 
   definitions = structuredClone(definitions || await readDefinitions());
@@ -75,7 +79,7 @@ export async function createRuntime({runtimePath, publicHandles = [], upstream, 
     return structuredClone(record);
   }};
   const setter = {async addRuntimeApiEaseCallParameters(parameters) {
-    parameters.shop = {myshopifyDomain: 'fixture.myshopify.com'};
+    parameters.shop = {myshopifyDomain: shopDomain};
     parameters.apiEaseShop = parameters.shop;
     parameters.session = {};
     parameters.nextAppUsageState = {};
@@ -98,9 +102,13 @@ export async function createRuntime({runtimePath, publicHandles = [], upstream, 
   };
   const registration = {async registerCall() {}};
   const liquidLimits = new LiquidLimit.default(1000000, 100000, 2000000);
-  const liquid = new LiquidService.default(new LiquidWrapper.default(1000).createSafeLiquidEngine(), liquidLimits);
+  const engine = new LiquidWrapper.default(1000).createSafeLiquidEngine();
+  if (nowSeconds !== undefined) engine.registerFilter('date', () => String(nowSeconds));
+  const liquid = new LiquidService.default(engine, liquidLimits);
   const liquidDispatcher = new LiquidDispatcher.default(new LiquidController.default(liquid));
-  const dispatcher = new CallDispatcher.default({dispatchHttpCall}, null, liquidDispatcher, null, resolver, registration);
+  const systemDispatcher = shopVariablesService
+    ? new SystemDispatcher.default(new SystemController.default(shopVariablesService)) : null;
+  const dispatcher = new CallDispatcher.default({dispatchHttpCall}, null, liquidDispatcher, systemDispatcher, resolver, registration);
   const caller = new Caller.default(null, dispatcher, registration, resolver, setter, validator, getter,
     new CallHistory.default(), new NextParameters.default(new NextRequest.default(), getter));
   liquid.registerLiquidTag(new CallerService.default(caller), liquidLimits);
@@ -109,7 +117,7 @@ export async function createRuntime({runtimePath, publicHandles = [], upstream, 
     calls,
     async execute({handle = handles.auth, storefront = false, query = {}, body} = {}) {
       const payload = await caller.apiEaseCall({
-        req: {query: {...query, requestId: handle, shop: 'fixture.myshopify.com'}, ...(body ? {body} : {})},
+        req: {query: {...query, requestId: handle, shop: shopDomain}, ...(body ? {body} : {})},
         route: storefront ? constants.APP_PROXY : constants.REMOTE,
         checkCustomerId: storefront,
       });
