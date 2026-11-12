@@ -1,5 +1,7 @@
 # Obtain a JWT and retrieve product data with a Liquid Request
 
+Source post: [Autenticate API call](https://community.shopify.com/t/autenticate-api-call/407663) (Shopify Community).
+
 <!-- apiease-kb:start -->
 This example uses a server-side Liquid Request to sign in to DummyJSON, use the returned JWT to retrieve three product summaries, and return only the fields needed for display. The caller does not obtain or supply the JWT.
 

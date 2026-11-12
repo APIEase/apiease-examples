@@ -1,5 +1,7 @@
 # Reuse a server-side JWT with a Liquid Request
 
+Source post: [Autenticate API call](https://community.shopify.com/t/autenticate-api-call/407663) (Shopify Community).
+
 <!-- apiease-kb:start -->
 This example adds a persisted JWT cache to the [Liquid Request example](../liquid-request/README.md). It retrieves the same three DummyJSON product summaries, but signs in only when the cached token is missing, unusable, or rejected by the provider.
 

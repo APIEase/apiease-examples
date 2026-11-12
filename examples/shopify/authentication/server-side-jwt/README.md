@@ -1,5 +1,7 @@
 # Server-side JWT authentication
 
+Source post: [Autenticate API call](https://community.shopify.com/t/autenticate-api-call/407663) (Shopify Community).
+
 <!-- apiease-kb:start -->
 Keep authentication and the protected API call on the server. The caller receives the data it needs without obtaining the service's JWT.
 

@@ -1,5 +1,7 @@
 # How To Integrate A Third-Party API In Shopify
 
+Source post: [How to integrate third party API in Shopify](https://stackoverflow.com/questions/54859491/how-to-integrate-third-party-api-in-shopify) (Stack Overflow).
+
 This example shows the smallest APIEase setup you need to send new Shopify orders to a third-party API without building or hosting a custom backend.
 
 ## What this example does
@@ -59,9 +61,6 @@ Use a more advanced APIEase flow if your third-party API needs more than a singl
 - Do not put the third-party API secret in Shopify theme code or storefront JavaScript.
 - Start with manual testing before relying on live orders.
 - Match the body format to the exact contract from the third-party API documentation.
-
-This example is based on the following Stack Overflow question:
-https://stackoverflow.com/questions/54859491/how-to-integrate-third-party-api-in-shopify
 
 If this helped you, consider sharing it with others who run into the same problem.
 

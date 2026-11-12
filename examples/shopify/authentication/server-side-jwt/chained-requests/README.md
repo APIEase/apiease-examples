@@ -1,5 +1,7 @@
 # Obtain a JWT and retrieve product data with Chained Requests
 
+Source post: [Autenticate API call](https://community.shopify.com/t/autenticate-api-call/407663) (Shopify Community).
+
 <!-- apiease-kb:start -->
 This example shows how to authenticate with an external API, use the returned JWT in a second request, and return product data to the caller. APIEase performs both requests on the server. The caller does not need to obtain or send the JWT.
 

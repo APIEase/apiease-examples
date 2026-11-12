@@ -12,6 +12,7 @@ This repository contains reusable APIEase examples and a curated examples knowle
 
 ## Authoring example READMEs
 
+- For every example that answers a user post, include a descriptive Markdown link back to the original post near the top of its `README.md`, outside the knowledge-base blocks. Include the link in each variant's README when the answer demonstrates multiple approaches.
 - Write for a public audience of APIEase users and developers. Describe setup steps, environment boundaries, and requirements directly without addressing or naming a particular assistant. These explanations should also give automated consumers enough context to guide users.
 - Keep APIEase implementation audits, proposed platform changes, and internal developer notes out of customer example documentation. Report those findings in the conversation; document customer setup, usage, and verified limitations in the repository.
 - Give each README one top-level `#` title outside the knowledge base blocks.

@@ -1,5 +1,7 @@
 # How To Allow An External Application To Connect To Any Number Of Shopify Stores
 
+Source post: [How to allow an external application to connect to any number of Shopify stores](https://community.shopify.com/t/how-to-allow-an-external-application-to-connect-to-any-number-of-shopify-stores/361444) (Shopify Community).
+
 This example answers the Shopify Community question by showing a small APIEase setup for a multi-store external application.
 
 The key point is that there is not a generic Shopify URL that lets an arbitrary external app send a merchant to Shopify, have them pick any store, and return permanent credentials to that external app.

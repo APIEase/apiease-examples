@@ -1,5 +1,7 @@
 # Lookup Shopify Discount Code Details From A Theme Extension
 
+Source post: [Using shopify api from theme extention](https://community.shopify.com/t/using-shopify-api-from-theme-extention/332413) (Shopify Community).
+
 <!-- apiease-kb:start -->
 This example shows how a Shopify storefront or theme extension can look up discount code details without calling the Shopify Admin API from browser-delivered code.
 
